@@ -270,6 +270,11 @@ export default function GenerateSertifikat() {
   }
 
   const renderCertificateHTML = ({ kegiatan, template, peserta, pengaturan, nomorSertifikat, qrDataUrl }) => {
+    // If template has background_image, use image overlay mode
+    if (template.background_image) {
+      return renderCertificateHTMLWithImage({ kegiatan, template, peserta, pengaturan, nomorSertifikat, qrDataUrl })
+    }
+
     const narasi = getNarasiDefault(peserta.jenis_sertifikat)
     const placeholderData = {
       nama_peserta: peserta.nama_lengkap,
@@ -409,6 +414,81 @@ export default function GenerateSertifikat() {
             <div style="width: 25px; height: 0.5px; background: ${accentColor}66;"></div>
             <span style="font-size: 7pt; color: #aaa; letter-spacing: 1px;">Sertifikat ini diterbitkan secara digital dan dapat diverifikasi melalui QR Code</span>
             <div style="width: 25px; height: 0.5px; background: ${accentColor}66;"></div>
+          </div>
+        </div>
+      </div>
+    `
+  }
+
+  // Render certificate with uploaded background image
+  const renderCertificateHTMLWithImage = ({ kegiatan, template, peserta, pengaturan, nomorSertifikat, qrDataUrl }) => {
+    const narasi = getNarasiDefault(peserta.jenis_sertifikat)
+    const placeholderData = {
+      nama_peserta: peserta.nama_lengkap,
+      nip_nik: peserta.nip_nik || '',
+      jabatan: peserta.jabatan || '',
+      instansi: peserta.instansi || '',
+      nama_kegiatan: kegiatan.nama_kegiatan,
+      jenis_kegiatan: kegiatan.jenis_kegiatan,
+      tanggal_mulai: formatTanggalIndonesia(kegiatan.tanggal_mulai),
+      tanggal_selesai: formatTanggalIndonesia(kegiatan.tanggal_selesai),
+      tempat: kegiatan.tempat,
+      jumlah_jp: kegiatan.jumlah_jp,
+      nomor_sertifikat: nomorSertifikat,
+      tanggal_terbit: formatTanggalIndonesia(new Date()),
+      nama_lembaga: pengaturan?.nama_lembaga || 'Kelompok Kerja Pengawas Madrasah Kabupaten Jember',
+      nama_ketua: pengaturan?.nama_ketua || 'Subariyanto, S.Pd., M.Pd.I.',
+      jabatan_ketua: pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'
+    }
+
+    const narasiFinal = parseTemplatePlaceholder(narasi, placeholderData)
+
+    const isLandscape = template.orientasi !== 'portrait'
+    const width = isLandscape ? '297mm' : '210mm'
+    const height = isLandscape ? '210mm' : '297mm'
+
+    const namaTtd = template.nama_ttd || pengaturan?.nama_ketua || 'Subariyanto, S.Pd., M.Pd.I.'
+    const jabatanTtd = template.jabatan_ttd || pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'
+    const qrSize = template.qr_size || 70
+
+    return `
+      <div style="width: ${width}; height: ${height}; position: relative; overflow: hidden; font-family: 'Times New Roman', Georgia, serif; background: #ffffff;">
+        
+        <!-- Background Image -->
+        <img src="${template.background_image}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
+
+        <!-- Nomor Sertifikat -->
+        <div style="position: absolute; top: ${template.pos_nomor_y || 18}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
+          <span style="font-size: ${template.font_nomor_size || 9}pt; color: ${template.font_nomor_color || '#064E3B'}; letter-spacing: 1px;">No: ${nomorSertifikat}</span>
+        </div>
+
+        <!-- Nama Peserta -->
+        <div style="position: absolute; top: ${template.pos_nama_y || 35}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+          <h2 style="font-size: ${template.font_nama_size || 28}pt; color: ${template.font_nama_color || '#064E3B'}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">${peserta.nama_lengkap}</h2>
+        </div>
+
+        <!-- Narasi -->
+        <div style="position: absolute; top: ${template.pos_narasi_y || 52}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
+          <p style="font-size: ${template.font_narasi_size || 11}pt; color: ${template.font_narasi_color || '#333333'}; text-align: justify; text-justify: inter-word; margin: 0;">
+            ${narasiFinal}
+          </p>
+        </div>
+
+        <!-- QR Code -->
+        <div style="position: absolute; top: ${template.pos_qr_y || 82}%; left: ${template.pos_qr_x || 5}%; z-index: 2; text-align: center;">
+          <div style="border: 1px solid rgba(0,0,0,0.2); padding: 3px; background: rgba(255,255,255,0.8); border-radius: 4px; display: inline-block;">
+            <img src="${qrDataUrl}" style="width: ${qrSize}px; height: ${qrSize}px; display: block;" />
+          </div>
+          <p style="font-size: 7pt; color: #555; margin: 2px 0 0 0;">Scan untuk verifikasi</p>
+        </div>
+
+        <!-- Tanda Tangan -->
+        <div style="position: absolute; top: ${template.pos_ttd_y || 82}%; left: ${template.pos_ttd_x || 70}%; z-index: 2; text-align: center;">
+          <p style="font-size: 9pt; color: #555; margin: 0 0 2px 0;">${jabatanTtd}</p>
+          <div style="height: 30px;"></div>
+          <div style="border-top: 1px solid #333; padding-top: 2px; min-width: 55mm;">
+            <p style="font-size: 10pt; margin: 0; font-weight: bold; color: ${template.font_nama_color || '#064E3B'};">${namaTtd}</p>
+            <p style="font-size: 8pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
           </div>
         </div>
       </div>
