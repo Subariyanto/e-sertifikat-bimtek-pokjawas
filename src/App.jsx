@@ -8,6 +8,7 @@ import Kegiatan from './pages/Kegiatan'
 import Peserta from './pages/Peserta'
 import VerifikasiPublik from './pages/VerifikasiPublik'
 import GenerateSertifikat from './pages/GenerateSertifikat'
+import Materi from './pages/Materi'
 import Templates from './pages/Templates'
 import Pengaturan from './pages/Pengaturan'
 import VerifikasiAdmin from './pages/VerifikasiAdmin'
@@ -38,6 +39,11 @@ function App() {
           <Route path="/peserta" element={
             <ProtectedRoute>
               <Peserta />
+            </ProtectedRoute>
+          } />
+          <Route path="/materi" element={
+            <ProtectedRoute>
+              <Materi />
             </ProtectedRoute>
           } />
           <Route path="/templates" element={

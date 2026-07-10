@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { 
   Home, FileText, Users, Layout, FileCheck, Settings, 
-  Menu, X, LogOut, Award 
+  Menu, X, LogOut, Award, BookOpen 
 } from 'lucide-react'
 
 export default function Sidebar() {
@@ -16,6 +16,7 @@ export default function Sidebar() {
     { icon: Home, label: 'Dashboard', path: '/dashboard' },
     { icon: FileText, label: 'Data Kegiatan', path: '/kegiatan' },
     { icon: Users, label: 'Data Peserta', path: '/peserta' },
+    { icon: BookOpen, label: 'Materi Bimtek', path: '/materi' },
     { icon: Layout, label: 'Template Sertifikat', path: '/templates' },
     { icon: Award, label: 'Generate Sertifikat', path: '/generate' },
     { icon: FileCheck, label: 'Verifikasi Sertifikat', path: '/verifikasi' },

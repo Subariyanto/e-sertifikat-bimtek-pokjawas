@@ -142,6 +142,100 @@ export default function GenerateSertifikat() {
     })
   }
 
+  const renderMateriHTML = ({ kegiatan, materiList, pengaturan }) => {
+    const bgColor = '#064E3B'
+    const accentColor = '#D4AF37'
+    const totalJP = materiList.reduce((sum, m) => sum + (parseInt(m.jumlah_jp) || 0), 0)
+    return `
+      <div style="width: 297mm; height: 210mm; background: #ffffff; position: relative; overflow: hidden; font-family: 'Times New Roman', Georgia, serif; box-sizing: border-box;">
+        <div style="position: absolute; top: 0; left: 0; width: 70px; height: 70px; border-top: 4px solid ${accentColor}; border-left: 4px solid ${accentColor}; border-radius: 8px 0 0 0;"></div>
+        <div style="position: absolute; top: 0; right: 0; width: 70px; height: 70px; border-top: 4px solid ${accentColor}; border-right: 4px solid ${accentColor}; border-radius: 0 8px 0 0;"></div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 70px; height: 70px; border-bottom: 4px solid ${accentColor}; border-left: 4px solid ${accentColor}; border-radius: 0 0 0 8px;"></div>
+        <div style="position: absolute; bottom: 0; right: 0; width: 70px; height: 70px; border-bottom: 4px solid ${accentColor}; border-right: 4px solid ${accentColor}; border-radius: 0 0 8px 0;"></div>
+        <div style="position: absolute; top: 8mm; left: 8mm; right: 8mm; bottom: 8mm; border: 2.5px solid ${accentColor}; border-radius: 4px;"></div>
+        <div style="position: absolute; top: 10mm; left: 10mm; right: 10mm; bottom: 10mm; border: 1px solid ${bgColor}; border-radius: 2px;"></div>
+        <div style="position: relative; text-align: center; padding-top: 16mm; z-index: 1;">
+          <div style="font-size: 9pt; color: ${bgColor}; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px;">${pengaturan && pengaturan.nama_lembaga ? pengaturan.nama_lembaga : 'Kelompok Kerja Pengawas Madrasah Kabupaten Jember'}</div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin: 4px 0;">
+            <div style="width: 40px; height: 1px; background: ${accentColor};"></div>
+            <div style="width: 8px; height: 8px; background: ${accentColor}; transform: rotate(45deg);"></div>
+            <div style="width: 40px; height: 1px; background: ${accentColor};"></div>
+          </div>
+          <h2 style="color: ${bgColor}; font-size: 16pt; margin: 6px 0 2px 0; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;">MATERI ${kegiatan.nama_kegiatan}</h2>
+          <p style="color: #666; font-size: 9pt; margin: 2px 0 0 0;">${formatTanggalIndonesia(kegiatan.tanggal_mulai)} s.d. ${formatTanggalIndonesia(kegiatan.tanggal_selesai)} &bull; ${kegiatan.tempat}</p>
+        </div>
+        <div style="position: relative; padding: 6mm 18mm 0 18mm; z-index: 1;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 9.5pt;">
+            <thead>
+              <tr style="background: ${bgColor}; color: #ffffff;">
+                <th style="padding: 6px 10px; text-align: center; width: 6%;">No</th>
+                <th style="padding: 6px 10px; text-align: left; width: 48%;">Judul Materi</th>
+                <th style="padding: 6px 10px; text-align: left; width: 36%;">Pemateri</th>
+                <th style="padding: 6px 10px; text-align: center; width: 10%;">JP</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${materiList.map((m, i) => '<tr style="background: ' + (i % 2 === 0 ? '#ffffff' : '#f9f9f9') + '; border-bottom: 1px solid #e5e7eb;"><td style="padding: 5px 10px; text-align: center; color: #555;">' + (i + 1) + '</td><td style="padding: 5px 10px; color: #222; font-weight: 500;">' + m.judul_materi + '</td><td style="padding: 5px 10px; color: #444;">' + m.nama_pemateri + '</td><td style="padding: 5px 10px; text-align: center; color: ' + bgColor + '; font-weight: bold;">' + m.jumlah_jp + '</td></tr>').join('')}
+              <tr style="background: #f0fdf4; border-top: 2px solid ${accentColor};">
+                <td colspan="3" style="padding: 6px 10px; text-align: right; font-weight: bold; color: ${bgColor};">Total Jam Pelajaran:</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: ${bgColor}; font-size: 11pt;">${totalJP}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="position: absolute; bottom: 18mm; right: 25mm; text-align: center; z-index: 1;">
+          <p style="font-size: 9pt; color: #555; margin: 0 0 2px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
+          <div style="height: 35px;"></div>
+          <div style="border-top: 1.5px solid ${bgColor}; padding-top: 3px; min-width: 60mm;">
+            <p style="font-size: 10pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+          </div>
+        </div>
+      </div>
+    `
+  }
+
+  const renderMateriHTMLSimple = ({ kegiatan, materiList, pengaturan }) => {
+    const bgColor = '#064E3B'
+    const accentColor = '#D4AF37'
+    const totalJP = materiList.reduce((sum, m) => sum + (parseInt(m.jumlah_jp) || 0), 0)
+    return `
+      <div style="width: 297mm; height: 210mm; background: #ffffff; position: relative; overflow: hidden; font-family: 'Times New Roman', Georgia, serif; box-sizing: border-box; border: 3px solid ${accentColor};">
+        <div style="padding: 12mm 16mm 8mm 16mm;">
+          <div style="text-align: center; margin-bottom: 6mm;">
+            <p style="font-size: 9pt; color: ${bgColor}; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 3px 0;">${pengaturan && pengaturan.nama_lembaga ? pengaturan.nama_lembaga : 'Kelompok Kerja Pengawas Madrasah Kabupaten Jember'}</p>
+            <h2 style="color: ${bgColor}; font-size: 14pt; margin: 4px 0 2px 0; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">MATERI ${kegiatan.nama_kegiatan}</h2>
+            <p style="color: #666; font-size: 8.5pt; margin: 2px 0 0 0;">${formatTanggalIndonesia(kegiatan.tanggal_mulai)} s.d. ${formatTanggalIndonesia(kegiatan.tanggal_selesai)} &bull; ${kegiatan.tempat}</p>
+            <div style="width: 80mm; height: 1px; background: ${accentColor}; margin: 6px auto 0;"></div>
+          </div>
+          <table style="width: 100%; border-collapse: collapse; font-size: 9pt;">
+            <thead>
+              <tr style="background: ${bgColor}; color: #ffffff;">
+                <th style="padding: 5px 8px; text-align: center; width: 6%;">No</th>
+                <th style="padding: 5px 8px; text-align: left; width: 48%;">Judul Materi</th>
+                <th style="padding: 5px 8px; text-align: left; width: 36%;">Pemateri</th>
+                <th style="padding: 5px 8px; text-align: center; width: 10%;">JP</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${materiList.map((m, i) => '<tr style="background: ' + (i % 2 === 0 ? '#ffffff' : '#f9f9f9') + '; border-bottom: 1px solid #e5e7eb;"><td style="padding: 4px 8px; text-align: center; color: #555;">' + (i + 1) + '</td><td style="padding: 4px 8px; color: #222;">' + m.judul_materi + '</td><td style="padding: 4px 8px; color: #444;">' + m.nama_pemateri + '</td><td style="padding: 4px 8px; text-align: center; font-weight: bold; color: ' + bgColor + ';">' + m.jumlah_jp + '</td></tr>').join('')}
+              <tr style="border-top: 2px solid ${accentColor}; background: #f0fdf4;">
+                <td colspan="3" style="padding: 5px 8px; text-align: right; font-weight: bold; color: ${bgColor};">Total Jam Pelajaran:</td>
+                <td style="padding: 5px 8px; text-align: center; font-weight: bold; color: ${bgColor};">${totalJP}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="position: absolute; bottom: 12mm; right: 20mm; text-align: center;">
+          <p style="font-size: 8.5pt; color: #555; margin: 0 0 2px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
+          <div style="height: 30px;"></div>
+          <div style="border-top: 1.5px solid ${bgColor}; padding-top: 3px; min-width: 55mm;">
+            <p style="font-size: 9.5pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+          </div>
+        </div>
+      </div>
+    `
+  }
+
   const generateSertifikatPDF = async (pesertaData, nomorUrut) => {
     const kegiatanData = kegiatan.find(k => k.id === selectedKegiatan)
     const templateData = templates.find(t => t.id === selectedTemplate)
@@ -189,6 +283,7 @@ export default function GenerateSertifikat() {
       qrDataUrl
     })
 
+    // Page 1
     const tempDiv = document.createElement('div')
     tempDiv.innerHTML = certificateHTML
     tempDiv.style.position = 'absolute'
@@ -202,11 +297,42 @@ export default function GenerateSertifikat() {
       useCORS: true,
       logging: false
     })
-
     document.body.removeChild(tempDiv)
 
     const imgData = canvas.toDataURL('image/png')
     pdf.addImage(imgData, 'PNG', 0, 0, 297, 210)
+
+    // Page 2: Materi
+    const { data: materiData } = await supabase
+      .from('materi')
+      .select('*')
+      .eq('kegiatan_id', selectedKegiatan)
+      .order('created_at', { ascending: true })
+    const materiList = materiData || []
+
+    pdf.addPage()
+
+    const materiHTML = templateData && templateData.background_image
+      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan })
+      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan })
+
+    const tempDiv2 = document.createElement('div')
+    tempDiv2.innerHTML = materiHTML
+    tempDiv2.style.position = 'absolute'
+    tempDiv2.style.left = '-9999px'
+    tempDiv2.style.width = '297mm'
+    tempDiv2.style.height = '210mm'
+    document.body.appendChild(tempDiv2)
+
+    const canvas2 = await html2canvas(tempDiv2, {
+      scale: 2,
+      useCORS: true,
+      logging: false
+    })
+    document.body.removeChild(tempDiv2)
+
+    const imgData2 = canvas2.toDataURL('image/png')
+    pdf.addImage(imgData2, 'PNG', 0, 0, 297, 210)
 
     return {
       pdf,

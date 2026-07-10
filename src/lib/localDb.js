@@ -75,6 +75,32 @@ const initializeData = () => {
     ],
     sertifikat: [],
     verifikasi_logs: [],
+    materi: [
+      {
+        id: generateId(),
+        kegiatan_id: '',
+        judul_materi: 'Kebijakan Pengawasan Madrasah',
+        nama_pemateri: 'Dr. H. Ahmad Syafi\'i, M.Pd.',
+        jumlah_jp: 3,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: generateId(),
+        kegiatan_id: '',
+        judul_materi: 'Teknik Supervisi Akademik',
+        nama_pemateri: 'Subariyanto, S.Pd., M.Pd.I.',
+        jumlah_jp: 4,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: generateId(),
+        kegiatan_id: '',
+        judul_materi: 'Penyusunan Laporan Pengawasan',
+        nama_pemateri: 'Drs. H. Mukhlis, M.Ag.',
+        jumlah_jp: 3,
+        created_at: new Date().toISOString()
+      }
+    ],
     pengaturan: [
       {
         id: '1',
