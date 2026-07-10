@@ -102,17 +102,38 @@ export const getStatusColor = (status) => {
   return colors[status] || 'bg-gray-100 text-gray-800';
 };
 
-// Export to CSV
+// Export to CSV (semicolon delimiter for Indonesian Excel compatibility)
 export const exportToCSV = (data, filename) => {
   if (!data || data.length === 0) return;
   
   const headers = Object.keys(data[0]);
   const csvContent = [
-    headers.join(','),
-    ...data.map(row => headers.map(header => `"${row[header] || ''}"`).join(','))
+    headers.join(';'),
+    ...data.map(row => headers.map(header => `"${row[header] || ''}"`).join(';'))
   ].join('\n');
   
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  // BOM for Excel UTF-8 compatibility
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+// Download CSV template for import
+export const downloadCSVTemplate = (filename) => {
+  const headers = ['nama_lengkap', 'nip_nik', 'jabatan', 'instansi', 'email', 'no_hp', 'jenis_sertifikat'];
+  const sampleRow = ['Ahmad Zainuri', '197001011998031001', 'Kepala MI', 'MI Nurul Huda', 'ahmad@email.com', '081234567890', 'Peserta'];
+  const csvContent = [
+    headers.join(';'),
+    sampleRow.map(v => `"${v}"`).join(';')
+  ].join('\n');
+  
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement('a');
   const url = URL.createObjectURL(blob);
   link.setAttribute('href', url);

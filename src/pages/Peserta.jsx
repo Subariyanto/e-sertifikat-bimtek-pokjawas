@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import Sidebar from '../components/Sidebar'
-import { Plus, Edit, Trash2, Users, Upload, Download, Search } from 'lucide-react'
+import { Plus, Edit, Trash2, Users, Upload, Download, Search, FileDown } from 'lucide-react'
 import Papa from 'papaparse'
-import { exportToCSV } from '../lib/utils'
+import { exportToCSV, downloadCSVTemplate } from '../lib/utils'
 
 export default function Peserta() {
   const [peserta, setPeserta] = useState([])
@@ -134,6 +134,8 @@ export default function Peserta() {
 
     Papa.parse(file, {
       header: true,
+      delimiter: '', // auto-detect
+      skipEmptyLines: true,
       complete: async (results) => {
         try {
           const validData = results.data
@@ -229,6 +231,13 @@ export default function Peserta() {
               <p className="text-gray-600">Kelola data peserta kegiatan</p>
             </div>
             <div className="flex gap-2">
+              <button
+                onClick={() => downloadCSVTemplate('template_import_peserta.csv')}
+                className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                <FileDown size={20} />
+                Template CSV
+              </button>
               <button
                 onClick={() => setShowImportModal(true)}
                 className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
@@ -531,8 +540,15 @@ export default function Peserta() {
               </div>
 
               <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
-                <p className="font-semibold mb-2">Format CSV:</p>
-                <p>nama_lengkap, nip_nik, jabatan, instansi, email, no_hp, jenis_sertifikat</p>
+                <p className="font-semibold mb-2">Format CSV (pakai titik koma ;):</p>
+                <p className="font-mono text-xs">nama_lengkap; nip_nik; jabatan; instansi; email; no_hp; jenis_sertifikat</p>
+                <p className="mt-2 text-xs">Jenis Sertifikat: Peserta, Narasumber, Panitia, Moderator, Penghargaan</p>
+                <button
+                  onClick={() => downloadCSVTemplate('template_import_peserta.csv')}
+                  className="mt-2 text-blue-600 hover:underline text-xs font-semibold"
+                >
+                  ⬇ Download Template CSV
+                </button>
               </div>
 
               <button
