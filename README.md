@@ -2,6 +2,8 @@
 
 Sistem Manajemen Sertifikat Digital untuk Kelompok Kerja Pengawas Madrasah Kabupaten Jember.
 
+🌐 **Live:** https://sertifikat.pokjawasjember.com
+
 ## 🎯 Fitur Utama
 
 - ✅ **Manajemen Kegiatan** - Kelola data Bimtek, Workshop, Seminar, dll
@@ -25,35 +27,6 @@ Aplikasi ini **tidak memerlukan Supabase** atau backend apapun. Semua data tersi
 - Data hanya tersimpan di 1 browser/komputer
 - Tidak ada sync antar device
 - Clear cache = data hilang (backup manual via export)
-
-## 📦 Instalasi
-
-### 1. Clone Repository
-
-```bash
-git clone https://github.com/Subariyanto/e-sertifikat-bimtek-pokjawas.git
-cd e-sertifikat-bimtek-pokjawas
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install --legacy-peer-deps
-```
-
-### 3. Jalankan Development Server
-
-```bash
-npm run dev
-```
-
-Buka browser: `http://localhost:5173/e-sertifikat-bimtek-pokjawas/`
-
-### 4. Build untuk Production
-
-```bash
-npm run build
-```
 
 ## 🔐 Login Default
 
@@ -111,6 +84,20 @@ Siti Aminah,197002021998032002,Guru MTs,MTs Al-Ikhlas,siti@example.com,081234567
 - Admin: menu **Verifikasi Sertifikat** → lihat semua sertifikat yang diterbitkan
 - Publik: scan QR Code di sertifikat → buka halaman verifikasi publik
 
+## 🌐 Custom Domain Setup
+
+Aplikasi ini di-deploy ke **sertifikat.pokjawasjember.com** via GitHub Pages.
+
+**DNS Record yang perlu ditambahkan:**
+```
+Type: CNAME
+Name: sertifikat
+Value: subariyanto.github.io
+TTL: 3600
+```
+
+Setelah DNS propagasi (5-30 menit), HTTPS akan auto-enable oleh GitHub.
+
 ## 📂 Struktur Folder
 
 ```
@@ -123,42 +110,13 @@ e-sertifikat-bimtek-pokjawas/
 │   ├── App.jsx
 │   └── main.jsx
 ├── public/
+│   └── CNAME             # Custom domain
 ├── dist/                 # Build output
-├── .env                  # Placeholder (tidak terpakai di local mode)
 ├── package.json
 ├── tailwind.config.js
 ├── vite.config.js
 └── README.md
 ```
-
-## 🌐 Deploy ke GitHub Pages
-
-### 1. Buat Repository GitHub
-
-```bash
-# Di folder project
-git init
-git add .
-git commit -m "Initial commit - e-Sertifikat Bimtek Pokjawas"
-git branch -M main
-git remote add origin https://github.com/Subariyanto/e-sertifikat-bimtek-pokjawas.git
-git push -u origin main
-```
-
-### 2. Deploy
-
-```bash
-npm run deploy
-```
-
-Aplikasi akan live di: `https://subariyanto.github.io/e-sertifikat-bimtek-pokjawas/`
-
-### 3. Setting GitHub Pages
-
-1. Buka repo di GitHub
-2. **Settings** → **Pages**
-3. Source: **gh-pages** branch
-4. Save
 
 ## 🔧 Kustomisasi
 
@@ -193,7 +151,7 @@ Masuk menu **Pengaturan** → edit **Nama Ketua**, **Jabatan Ketua**, dll.
 ### Backup localStorage (Advanced)
 1. Buka browser **DevTools** (F12)
 2. Tab **Application** → **Local Storage**
-3. Pilih `http://localhost:5173` atau `https://subariyanto.github.io`
+3. Pilih domain aplikasi
 4. Copy value dari key `e_sertifikat_bimtek_pokjawas_v1`
 5. Simpan di file `.txt`
 
@@ -219,23 +177,6 @@ Paste kembali value tersebut ke localStorage key yang sama.
 - Sertifikat yang digenerate berformat A4 landscape
 - QR Code verification URL: `/verifikasi/{kode_unik}`
 - Password default disimpan plain text (demo only - production gunakan bcrypt)
-
-## 🐛 Troubleshooting
-
-### Data Hilang
-→ Browser clear cache. Backup manual via export CSV.
-
-### Build Error
-```bash
-npm install --legacy-peer-deps
-npm run build
-```
-
-### Dev Server Port Conflict
-Ubah port di `vite.config.js`:
-```js
-server: { port: 3000 }
-```
 
 ## 📄 License
 
