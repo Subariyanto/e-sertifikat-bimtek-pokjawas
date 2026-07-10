@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import LandingPage from './pages/LandingPage'
@@ -16,7 +16,7 @@ import './index.css'
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
@@ -40,8 +40,6 @@ function App() {
               <Peserta />
             </ProtectedRoute>
           } />
-          
-          {/* Placeholder routes - akan dilengkapi */}
           <Route path="/templates" element={
             <ProtectedRoute>
               <Templates />
@@ -52,7 +50,7 @@ function App() {
               <GenerateSertifikat />
             </ProtectedRoute>
           } />
-          <Route path="/verifikasi" element={
+          <Route path="/verifikasi-admin" element={
             <ProtectedRoute>
               <VerifikasiAdmin />
             </ProtectedRoute>
@@ -66,7 +64,7 @@ function App() {
           {/* Catch all */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </AuthProvider>
   )
 }
