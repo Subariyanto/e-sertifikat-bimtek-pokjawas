@@ -19,8 +19,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Check active session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
       if (session?.user) {
+        setUser(session.user)
         fetchProfile(session.user.id)
       } else {
         setLoading(false)
@@ -29,10 +29,11 @@ export const AuthProvider = ({ children }) => {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
       if (session?.user) {
+        setUser(session.user)
         fetchProfile(session.user.id)
       } else {
+        setUser(null)
         setProfile(null)
         setLoading(false)
       }
@@ -64,6 +65,13 @@ export const AuthProvider = ({ children }) => {
       password
     })
     if (error) throw error
+    
+    // Immediately update user state (don't wait for onAuthStateChange)
+    if (data?.user) {
+      setUser(data.user)
+      fetchProfile(data.user.id)
+    }
+    
     return data
   }
 
