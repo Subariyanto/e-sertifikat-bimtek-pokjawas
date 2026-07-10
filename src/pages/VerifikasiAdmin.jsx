@@ -237,7 +237,7 @@ export default function VerifikasiAdmin() {
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
                             <a
-                              href={`/verifikasi/${item.kode_unik}`}
+                              href={`#/verifikasi/${item.kode_unik}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors"

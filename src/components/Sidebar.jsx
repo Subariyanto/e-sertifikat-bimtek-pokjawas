@@ -19,7 +19,7 @@ export default function Sidebar() {
     { icon: BookOpen, label: 'Materi Bimtek', path: '/materi' },
     { icon: Layout, label: 'Template Sertifikat', path: '/templates' },
     { icon: Award, label: 'Generate Sertifikat', path: '/generate' },
-    { icon: FileCheck, label: 'Verifikasi Sertifikat', path: '/verifikasi' },
+    { icon: FileCheck, label: 'Verifikasi Sertifikat', path: '/verifikasi-admin' },
     { icon: Settings, label: 'Pengaturan', path: '/pengaturan' },
   ]
 

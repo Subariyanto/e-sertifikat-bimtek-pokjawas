@@ -13,6 +13,8 @@ export default function VerifikasiPublik() {
   useEffect(() => {
     if (kode) {
       verifySertifikat(kode)
+    } else {
+      setLoading(false)
     }
   }, [kode])
 
