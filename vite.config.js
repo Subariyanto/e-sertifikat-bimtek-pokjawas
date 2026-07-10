@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  base: '/e-sertifikat-bimtek-pokjawas/',
   build: {
     outDir: 'dist',
     sourcemap: false,
