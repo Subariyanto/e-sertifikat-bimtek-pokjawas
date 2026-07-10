@@ -583,9 +583,20 @@ export default function GenerateSertifikat() {
         <!-- Background Image -->
         <img src="${template.background_image}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
 
+        <!-- SERTIFIKAT Title -->
+        <div style="position: absolute; top: ${Math.max((template.pos_nomor_y || 18) - 10, 5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
+          <h1 style="font-size: ${(template.font_nomor_size || 9) + 18}pt; color: ${template.font_nomor_color || '#064E3B'}; margin: 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">SERTIFIKAT</h1>
+          <p style="font-size: ${(template.font_nomor_size || 9) + 1}pt; color: ${template.font_nomor_color || '#064E3B'}; letter-spacing: 2px; margin: 4px 0 0 0; text-transform: uppercase;">Kelompok Kerja Pengawas Madrasah Kab. Jember</p>
+        </div>
+
         <!-- Nomor Sertifikat -->
         <div style="position: absolute; top: ${template.pos_nomor_y || 18}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
           <span style="font-size: ${template.font_nomor_size || 9}pt; color: ${template.font_nomor_color || '#064E3B'}; letter-spacing: 1px;">No: ${nomorSertifikat}</span>
+        </div>
+
+        <!-- Diberikan Kepada -->
+        <div style="position: absolute; top: ${Math.min((template.pos_nama_y || 35) - 6, (template.pos_nama_y || 35) - 6)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+          <p style="font-size: ${(template.font_narasi_size || 11)}pt; color: #555; margin: 0; font-style: italic;">Diberikan Kepada:</p>
         </div>
 
         <!-- Nama Peserta -->
