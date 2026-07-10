@@ -69,10 +69,14 @@ export default function GenerateSertifikat() {
     }
   }
 
-  const generateQRCode = async (kodeUnik) => {
+  const generateQRCode = async (kodeUnik, pesertaData) => {
     try {
       const verifyUrl = `${window.location.origin}${window.location.pathname}#/verifikasi/${kodeUnik}`
-      const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
+      // QR contains verification URL + participant info (Name + NIP/NIK)
+      const qrContent = pesertaData
+        ? `${verifyUrl}\nNama: ${pesertaData.nama_lengkap}\nNIP/NIK: ${pesertaData.nip_nik || '-'}\nKode: ${kodeUnik}`
+        : verifyUrl
+      const qrDataUrl = await QRCode.toDataURL(qrContent, {
         width: 200,
         margin: 1,
         color: {
@@ -122,7 +126,7 @@ export default function GenerateSertifikat() {
     const pesertaData = filteredPeserta[0]
 
     const kodeUnik = generateKodeUnik()
-    const qrDataUrl = await generateQRCode(kodeUnik)
+    const qrDataUrl = await generateQRCode(kodeUnik, pesertaData)
     const nomorUrut = await getNextNomorUrut(selectedKegiatan)
     const nomorSertifikat = generateNomorSertifikat(
       pengaturan?.format_nomor_sertifikat || '{nomor}/{kode_kegiatan}-POKJAWAS/JBR/{bulan_romawi}/{tahun}',
@@ -241,7 +245,7 @@ export default function GenerateSertifikat() {
     const templateData = templates.find(t => t.id === selectedTemplate)
     
     const kodeUnik = generateKodeUnik()
-    const qrDataUrl = await generateQRCode(kodeUnik)
+    const qrDataUrl = await generateQRCode(kodeUnik, pesertaData)
     const nomorSertifikat = generateNomorSertifikat(
       pengaturan?.format_nomor_sertifikat || '{nomor}/{kode_kegiatan}-POKJAWAS/JBR/{bulan_romawi}/{tahun}',
       nomorUrut,
