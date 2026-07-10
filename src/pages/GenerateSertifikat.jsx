@@ -71,7 +71,7 @@ export default function GenerateSertifikat() {
 
   const generateQRCode = async (kodeUnik) => {
     try {
-      const verifyUrl = `${window.location.origin}/verifikasi/${kodeUnik}`
+      const verifyUrl = `${window.location.origin}${window.location.pathname}#/verifikasi/${kodeUnik}`
       const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
         width: 200,
         margin: 1,
@@ -293,53 +293,123 @@ export default function GenerateSertifikat() {
 
     const bgColor = template.warna_utama || '#064E3B'
     const accentColor = template.warna_sekunder || '#D4AF37'
+    const isNarasumber = peserta.jenis_sertifikat === 'Narasumber'
+    const isPenghargaan = peserta.jenis_sertifikat === 'Penghargaan'
 
     return `
-      <div style="width: 297mm; height: 210mm; background: white; position: relative; padding: 20mm; box-sizing: border-box; font-family: 'Times New Roman', serif;">
-        <!-- Border -->
-        <div style="position: absolute; top: 15mm; left: 15mm; right: 15mm; bottom: 15mm; border: 3px solid ${accentColor}; border-radius: 8px;"></div>
-        <div style="position: absolute; top: 17mm; left: 17mm; right: 17mm; bottom: 17mm; border: 1px solid ${bgColor};"></div>
+      <div style="width: 297mm; height: 210mm; background: #ffffff; position: relative; overflow: hidden; font-family: 'Times New Roman', Georgia, serif;">
         
-        <!-- Header -->
-        <div style="text-align: center; margin-top: 10mm;">
-          <h1 style="color: ${bgColor}; font-size: 32pt; margin: 0; font-weight: bold; letter-spacing: 2px;">SERTIFIKAT</h1>
-          <p style="color: ${accentColor}; font-size: 12pt; margin: 5px 0;">Nomor: ${nomorSertifikat}</p>
+        <!-- Decorative Corner Ornaments -->
+        <div style="position: absolute; top: 0; left: 0; width: 70px; height: 70px; border-top: 4px solid ${accentColor}; border-left: 4px solid ${accentColor}; border-radius: 8px 0 0 0;"></div>
+        <div style="position: absolute; top: 0; right: 0; width: 70px; height: 70px; border-top: 4px solid ${accentColor}; border-right: 4px solid ${accentColor}; border-radius: 0 8px 0 0;"></div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 70px; height: 70px; border-bottom: 4px solid ${accentColor}; border-left: 4px solid ${accentColor}; border-radius: 0 0 0 8px;"></div>
+        <div style="position: absolute; bottom: 0; right: 0; width: 70px; height: 70px; border-bottom: 4px solid ${accentColor}; border-right: 4px solid ${accentColor}; border-radius: 0 0 8px 0;"></div>
+
+        <!-- Outer Border -->
+        <div style="position: absolute; top: 8mm; left: 8mm; right: 8mm; bottom: 8mm; border: 2.5px solid ${accentColor}; border-radius: 4px;"></div>
+        
+        <!-- Inner Border -->
+        <div style="position: absolute; top: 10mm; left: 10mm; right: 10mm; bottom: 10mm; border: 1px solid ${bgColor}; border-radius: 2px;"></div>
+
+        <!-- Inner decorative line -->
+        <div style="position: absolute; top: 11mm; left: 11mm; right: 11mm; bottom: 11mm; border: 0.5px solid ${accentColor}99; border-radius: 2px;"></div>
+
+        <!-- Watermark -->
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); font-size: 120pt; font-weight: bold; color: ${bgColor}06; white-space: nowrap; pointer-events: none; z-index: 0;">SERTIFIKAT</div>
+
+        <!-- Top decorative bar -->
+        <div style="position: absolute; top: 12mm; left: 50%; transform: translateX(-50%); width: 60mm; height: 3px; background: linear-gradient(90deg, transparent, ${accentColor}, transparent);"></div>
+
+        <!-- Header Section -->
+        <div style="position: relative; text-align: center; padding-top: 18mm; z-index: 1;">
+          <div style="font-size: 9pt; color: ${bgColor}; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px;">${pengaturan?.nama_lembaga || 'Kelompok Kerja Pengawas Madrasah Kabupaten Jember'}</div>
+          
+          <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin: 6px 0;">
+            <div style="width: 40px; height: 1px; background: ${accentColor};"></div>
+            <div style="width: 8px; height: 8px; background: ${accentColor}; transform: rotate(45deg);"></div>
+            <div style="width: 40px; height: 1px; background: ${accentColor};"></div>
+          </div>
+
+          <h1 style="color: ${bgColor}; font-size: 36pt; margin: 8px 0 2px 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px ${accentColor}33;">SERTIFIKAT</h1>
+          
+          <p style="color: ${accentColor}; font-size: 11pt; margin: 4px 0; font-style: italic;">${isPenghargaan ? 'Penghargaan' : isNarasumber ? 'Narasumber' : 'Peserta'}</p>
+          
+          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px 0;">
+            <div style="width: 30px; height: 1px; background: ${bgColor}55;"></div>
+            <span style="font-size: 8pt; color: ${bgColor}; letter-spacing: 1px;">No: ${nomorSertifikat}</span>
+            <div style="width: 30px; height: 1px; background: ${bgColor}55;"></div>
+          </div>
         </div>
 
-        <!-- Nama Peserta -->
-        <div style="text-align: center; margin: 20mm 0 15mm 0;">
-          <h2 style="color: ${bgColor}; font-size: 28pt; margin: 0; font-weight: bold;">${peserta.nama_lengkap}</h2>
-          ${peserta.instansi ? `<p style="color: #666; font-size: 12pt; margin: 5px 0;">${peserta.instansi}</p>` : ''}
+        <!-- "Diberikan kepada" -->
+        <div style="text-align: center; margin-top: 12mm; position: relative; z-index: 1;">
+          <p style="font-size: 10pt; color: #555; margin: 0 0 6px 0; font-style: italic;">Diberikan kepada:</p>
+          
+          <!-- Name with decorative underline -->
+          <div style="display: inline-block; position: relative;">
+            <h2 style="color: ${bgColor}; font-size: 26pt; margin: 0; font-weight: bold; padding: 0 20px; letter-spacing: 1px;">${peserta.nama_lengkap}</h2>
+            <div style="height: 2px; background: linear-gradient(90deg, transparent, ${accentColor}, transparent); margin-top: 4px;"></div>
+          </div>
+          
+          ${peserta.jabatan || peserta.instansi ? `<p style="color: #666; font-size: 10pt; margin: 8px 0 0 0;">${peserta.jabatan ? peserta.jabatan : ''}${peserta.jabatan && peserta.instansi ? ' — ' : ''}${peserta.instansi ? peserta.instansi : ''}</p>` : ''}
         </div>
 
         <!-- Narasi -->
-        <div style="text-align: center; padding: 0 30mm; line-height: 1.8;">
-          <p style="font-size: 11pt; color: #333; text-align: justify; text-justify: inter-word;">
+        <div style="text-align: center; padding: 8mm 35mm 0 35mm; line-height: 1.9; position: relative; z-index: 1;">
+          <p style="font-size: 10.5pt; color: #333; text-align: justify; text-justify: inter-word; margin: 0;">
             ${narasiFinal}
           </p>
         </div>
 
-        <!-- Footer dengan TTD dan QR -->
-        <div style="position: absolute; bottom: 35mm; left: 30mm; right: 30mm; display: flex; justify-content: space-between; align-items: flex-end;">
-          <!-- QR Code -->
-          <div style="text-align: center; width: 100px;">
-            <img src="${qrDataUrl}" style="width: 80px; height: 80px; display: block; margin: 0 auto 5px;" />
-            <p style="font-size: 7pt; color: #666; margin: 0;">Scan untuk verifikasi</p>
+        <!-- Bottom decorative bar -->
+        <div style="position: absolute; bottom: 52mm; left: 50%; transform: translateX(-50%); width: 80mm; height: 1px; background: linear-gradient(90deg, transparent, ${accentColor}88, transparent);"></div>
+
+        <!-- Footer: QR + TTD -->
+        <div style="position: absolute; bottom: 18mm; left: 25mm; right: 25mm; display: flex; justify-content: space-between; align-items: flex-end; z-index: 1;">
+          
+          <!-- QR Code with decorative frame -->
+          <div style="text-align: center;">
+            <div style="border: 1.5px solid ${accentColor}; padding: 4px; border-radius: 4px; display: inline-block;">
+              <img src="${qrDataUrl}" style="width: 70px; height: 70px; display: block;" />
+            </div>
+            <p style="font-size: 7pt; color: #777; margin: 3px 0 0 0;">Scan untuk verifikasi</p>
+          </div>
+
+          <!-- Center info -->
+          <div style="text-align: center; flex: 1; padding: 0 20px;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 4px;">
+              <div style="width: 20px; height: 1px; background: ${bgColor}44;"></div>
+              <span style="font-size: 8pt; color: ${bgColor}; text-transform: uppercase; letter-spacing: 2px;">Diterbitkan</span>
+              <div style="width: 20px; height: 1px; background: ${bgColor}44;"></div>
+            </div>
+            <p style="font-size: 9pt; color: #555; margin: 0;">${kegiatan.tempat}, ${formatTanggalIndonesia(new Date())}</p>
+            <p style="font-size: 8pt; color: #999; margin: 2px 0 0 0;">${kegiatan.jumlah_jp} Jam Pelajaran</p>
           </div>
 
           <!-- TTD -->
-          <div style="text-align: center; flex: 1; margin-left: 50px;">
-            <p style="font-size: 10pt; margin: 0 0 5px 0;">${kegiatan.tempat}, ${formatTanggalIndonesia(new Date())}</p>
-            <p style="font-size: 10pt; margin: 0 0 40px 0;">${pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'}</p>
-            <p style="font-size: 10pt; margin: 0; font-weight: bold; border-bottom: 1px solid #000; display: inline-block; padding-bottom: 2px;">${pengaturan?.nama_ketua || 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+          <div style="text-align: center;">
+            <p style="font-size: 9pt; color: #555; margin: 0 0 2px 0;">${pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'}</p>
+            <!-- Signature space -->
+            <div style="height: 35px;"></div>
+            <div style="border-top: 1.5px solid ${bgColor}; padding-top: 3px; min-width: 60mm;">
+              <p style="font-size: 10pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan?.nama_ketua || 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+              <p style="font-size: 8pt; color: #777; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
+            </div>
           </div>
         </div>
 
-        <!-- Footer Note -->
-        <div style="position: absolute; bottom: 15mm; left: 30mm; right: 30mm; text-align: center;">
-          <p style="font-size: 8pt; color: #999; margin: 0;">
-            Sertifikat ini diterbitkan secara digital dan dapat diverifikasi keasliannya melalui QR Code.
-          </p>
+        <!-- Official Seal (decorative) -->
+        <div style="position: absolute; bottom: 28mm; right: 60mm; width: 50px; height: 50px; border: 2px solid ${accentColor}44; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 0;">
+          <div style="width: 42px; height: 42px; border: 1px solid ${accentColor}44; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 7pt; color: ${bgColor}44; font-weight: bold; text-align: center; line-height: 1;">POKJ<br>WAS</div>
+        </div>
+
+        <!-- Bottom footer text -->
+        <div style="position: absolute; bottom: 10mm; left: 25mm; right: 25mm; text-align: center; z-index: 1;">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 2px;">
+            <div style="width: 25px; height: 0.5px; background: ${accentColor}66;"></div>
+            <span style="font-size: 7pt; color: #aaa; letter-spacing: 1px;">Sertifikat ini diterbitkan secara digital dan dapat diverifikasi melalui QR Code</span>
+            <div style="width: 25px; height: 0.5px; background: ${accentColor}66;"></div>
+          </div>
         </div>
       </div>
     `
