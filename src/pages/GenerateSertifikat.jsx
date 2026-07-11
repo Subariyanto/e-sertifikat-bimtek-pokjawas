@@ -301,7 +301,8 @@ export default function GenerateSertifikat() {
     const pdf = new jsPDF({
       orientation: 'landscape',
       unit: 'mm',
-      format: 'a4'
+      format: 'a4',
+      compress: true
     })
 
     const certificateHTML = renderCertificateHTML({
@@ -323,14 +324,14 @@ export default function GenerateSertifikat() {
     document.body.appendChild(tempDiv)
 
     const canvas = await html2canvas(tempDiv, {
-      scale: 2,
+      scale: 1.5,
       useCORS: true,
       logging: false
     })
     document.body.removeChild(tempDiv)
 
-    const imgData = canvas.toDataURL('image/png')
-    pdf.addImage(imgData, 'PNG', 0, 0, 297, 210)
+    const imgData = canvas.toDataURL('image/jpeg', 0.85)
+    pdf.addImage(imgData, 'JPEG', 0, 0, 297, 210)
 
     // Page 2: Materi
     const { data: materiData } = await supabase
@@ -355,14 +356,14 @@ export default function GenerateSertifikat() {
     document.body.appendChild(tempDiv2)
 
     const canvas2 = await html2canvas(tempDiv2, {
-      scale: 2,
+      scale: 1.5,
       useCORS: true,
       logging: false
     })
     document.body.removeChild(tempDiv2)
 
-    const imgData2 = canvas2.toDataURL('image/png')
-    pdf.addImage(imgData2, 'PNG', 0, 0, 297, 210)
+    const imgData2 = canvas2.toDataURL('image/jpeg', 0.85)
+    pdf.addImage(imgData2, 'JPEG', 0, 0, 297, 210)
 
     return {
       pdf,
