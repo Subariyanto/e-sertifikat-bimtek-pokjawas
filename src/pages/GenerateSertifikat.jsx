@@ -523,7 +523,7 @@ export default function GenerateSertifikat() {
 
           <!-- TTD -->
           <div style="text-align: center;">
-            <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">${kegiatan.tempat || 'Jember'}, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
+            <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
             <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'}</p>
             <!-- Signature space -->
             <div style="height: 35px;"></div>
@@ -622,7 +622,7 @@ export default function GenerateSertifikat() {
 
         <!-- Tanda Tangan (center, font 14, no line) -->
         <div style="position: absolute; top: ${template.pos_ttd_y || 78}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
-          <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">${kegiatan.tempat || 'Jember'}, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
+          <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
           <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${jabatanTtd}</p>
           <div style="height: 30px;"></div>
           <div style="min-width: 55mm; margin: 0 auto;">
