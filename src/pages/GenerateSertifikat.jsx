@@ -148,9 +148,6 @@ export default function GenerateSertifikat() {
       nomor: nomorSertifikat
     })
 
-    // Fallback: if QR failed, use transparent 1x1 pixel to prevent html2canvas crash
-    const safeQrDataUrl = qrDataUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
-
     setPreviewData({
       kegiatan: kegiatanData,
       template: templateData,
@@ -158,7 +155,7 @@ export default function GenerateSertifikat() {
       pengaturan,
       nomorSertifikat,
       kodeUnik,
-      qrDataUrl: safeQrDataUrl
+      qrDataUrl
     })
   }
 
@@ -282,9 +279,6 @@ export default function GenerateSertifikat() {
       nomor: nomorSertifikat
     })
 
-    // Fallback: if QR failed, use transparent 1x1 pixel to prevent html2canvas crash
-    const safeQrDataUrl = qrDataUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
-
     // Simpan ke database
     const { data: sertifikatData, error: insertError } = await supabase
       .from('sertifikat')
@@ -294,7 +288,7 @@ export default function GenerateSertifikat() {
         template_id: selectedTemplate,
         nomor_sertifikat: nomorSertifikat,
         kode_unik: kodeUnik,
-        qr_url: '',
+        qr_url: qrDataUrl,
         status_validasi: 'valid',
         tanggal_terbit: new Date().toISOString().split('T')[0]
       }])
@@ -316,7 +310,7 @@ export default function GenerateSertifikat() {
       peserta: pesertaData,
       pengaturan,
       nomorSertifikat,
-      qrDataUrl: safeQrDataUrl
+      qrDataUrl
     })
 
     // Page 1
@@ -327,16 +321,6 @@ export default function GenerateSertifikat() {
     tempDiv.style.width = '297mm'
     tempDiv.style.height = '210mm'
     document.body.appendChild(tempDiv)
-
-    // Wait for all images to load before html2canvas
-    const imgs1 = tempDiv.querySelectorAll('img')
-    await Promise.all(Array.from(imgs1).map(img => {
-      if (img.complete && img.naturalWidth > 0) return Promise.resolve()
-      return new Promise(resolve => {
-        img.onload = resolve
-        img.onerror = resolve
-      })
-    }))
 
     const canvas = await html2canvas(tempDiv, {
       scale: 2,
@@ -359,8 +343,8 @@ export default function GenerateSertifikat() {
     pdf.addPage()
 
     const materiHTML = templateData && templateData.background_image
-      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl: safeQrDataUrl, peserta: pesertaData })
-      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl: safeQrDataUrl, peserta: pesertaData })
+      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl, peserta: pesertaData })
+      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl, peserta: pesertaData })
 
     const tempDiv2 = document.createElement('div')
     tempDiv2.innerHTML = materiHTML
@@ -369,16 +353,6 @@ export default function GenerateSertifikat() {
     tempDiv2.style.width = '297mm'
     tempDiv2.style.height = '210mm'
     document.body.appendChild(tempDiv2)
-
-    // Wait for all images to load before html2canvas
-    const imgs2 = tempDiv2.querySelectorAll('img')
-    await Promise.all(Array.from(imgs2).map(img => {
-      if (img.complete && img.naturalWidth > 0) return Promise.resolve()
-      return new Promise(resolve => {
-        img.onload = resolve
-        img.onerror = resolve
-      })
-    }))
 
     const canvas2 = await html2canvas(tempDiv2, {
       scale: 2,

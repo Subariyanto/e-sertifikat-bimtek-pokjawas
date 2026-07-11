@@ -145,36 +145,9 @@ const getData = () => {
   return initializeData()
 }
 
-// Save all data (with cleanup to prevent quota exceeded)
+// Save all data
 const saveData = (data) => {
-  // Clean up large qr_url fields from sertifikat records
-  if (data.sertifikat && Array.isArray(data.sertifikat)) {
-    data.sertifikat.forEach(s => {
-      if (s.qr_url && s.qr_url.length > 100) s.qr_url = ''
-    })
-  }
-  // Clean up large background_image from templates (keep only if < 500KB)
-  if (data.templates && Array.isArray(data.templates)) {
-    data.templates.forEach(t => {
-      if (t.background_image && t.background_image.length > 500000) {
-        console.warn('Template background_image too large, removing to prevent quota')
-        t.background_image = ''
-      }
-    })
-  }
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-  } catch (e) {
-    console.error('localStorage quota exceeded, attempting cleanup...')
-    // Emergency: clear qr_url and retry
-    if (data.sertifikat) data.sertifikat.forEach(s => { s.qr_url = '' })
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-    } catch (e2) {
-      console.error('Still exceeded after cleanup. Data may be too large.')
-      throw e2
-    }
-  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
 }
 
 // Mimic Supabase query builder
