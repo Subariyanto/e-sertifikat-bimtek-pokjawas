@@ -589,31 +589,31 @@ export default function GenerateSertifikat() {
         <img src="${template.background_image}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
 
         <!-- Lembaga + SERTIFIKAT + No (merged, no gap) -->
-        <div style="position: absolute; top: ${Math.max(42 - 16, 3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
+        <div style="position: absolute; top: ${Math.max(36 - 16, 3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
           <p style="font-size: ${(template.font_nomor_size || 9) + 2}pt; color: ${template.font_nomor_color || '#064E3B'}; letter-spacing: 2px; margin: 0 0 6px 0; text-transform: uppercase; font-weight: bold;">Kelompok Kerja Pengawas Madrasah Kab. Jember</p>
           <h1 style="font-size: ${(template.font_nomor_size || 9) + 18}pt; color: ${template.font_nomor_color || '#064E3B'}; margin: 0 0 2px 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">SERTIFIKAT</h1>
           <span style="font-size: ${template.font_nomor_size || 9}pt; color: ${template.font_nomor_color || '#064E3B'}; letter-spacing: 1px; display: block;">No: ${nomorSertifikat}</span>
         </div>
 
         <!-- Diberikan Kepada -->
-        <div style="position: absolute; top: ${Math.min(58 - 5, 58 - 5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+        <div style="position: absolute; top: ${Math.min(52 - 5, 52 - 5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
           <p style="font-size: ${(template.font_narasi_size || 11)}pt; color: #555; margin: 0; font-style: italic;">Diberikan Kepada:</p>
         </div>
 
         <!-- Nama Peserta -->
-        <div style="position: absolute; top: 58%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
+        <div style="position: absolute; top: 52%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
           <h2 style="font-size: ${template.font_nama_size || 28}pt; color: ${template.font_nama_color || '#064E3B'}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); line-height: 1.3; word-wrap: break-word; white-space: normal;">${peserta.nama_lengkap}</h2>
         </div>
 
         <!-- Narasi -->
-        <div style="position: absolute; top: 64%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
+        <div style="position: absolute; top: 58%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
           <p style="font-size: ${template.font_narasi_size || 11}pt; color: ${template.font_narasi_color || '#333333'}; text-align: justify; text-justify: inter-word; margin: 0;">
             ${narasiFinal}
           </p>
         </div>
 
         <!-- QR Code -->
-        <div style="position: absolute; top: 80%; left: 5%; z-index: 2; text-align: center;">
+        <div style="position: absolute; top: 74%; left: 5%; z-index: 2; text-align: center;">
           <div style="border: 1px solid rgba(0,0,0,0.2); padding: 3px; background: rgba(255,255,255,0.8); border-radius: 4px; display: inline-block;">
             <img src="${qrDataUrl}" style="width: ${qrSize}px; height: ${qrSize}px; display: block;" />
           </div>
@@ -621,7 +621,7 @@ export default function GenerateSertifikat() {
         </div>
 
         <!-- Tanda Tangan (center, font 14, no line) -->
-        <div style="position: absolute; top: 76%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
+        <div style="position: absolute; top: 70%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
           <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
           <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${jabatanTtd}</p>
           <div style="height: 30px;"></div>
