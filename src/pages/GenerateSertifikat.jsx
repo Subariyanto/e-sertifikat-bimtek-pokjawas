@@ -79,7 +79,7 @@ export default function GenerateSertifikat() {
         d.jenis || 'Peserta',
         d.nomor || ''
       ]
-      const encoded = btoa(unescape(encodeURIComponent(v.join('|')))).replace(/\+/g, '-').replace(/\//g, '_')
+      const encoded = btoa(unescape(encodeURIComponent(v.join('|')))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
       const verifyUrl = `${window.location.origin}${window.location.pathname}#/v/${encoded}`
       const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
         width: 300,

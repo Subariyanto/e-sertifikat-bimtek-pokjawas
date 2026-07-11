@@ -1,34 +1,53 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { CheckCircle, XCircle, Award, User, ArrowLeft } from 'lucide-react'
 
 export default function VerifikasiPublik() {
+  const { kode, encoded } = useParams()
   const [sertifikat, setSertifikat] = useState(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
 
   useEffect(() => {
     try {
-      const hash = window.location.hash
-      const segs = hash.split('/')
-      const encoded = segs[segs.length - 1]
-      if (!encoded) { setNotFound(true); setLoading(false); return }
+      // Try :encoded first (/v/:encoded), fallback to :kode (/verifikasi/:kode)
+      const raw = encoded || kode || ''
+      if (!raw) { setNotFound(true); setLoading(false); return }
 
-      const decoded = decodeURIComponent(escape(atob(encoded.replace(/-/g, '+').replace(/_/g, '/'))))
+      let b64 = raw.replace(/-/g, '+').replace(/_/g, '/')
+      while (b64.length % 4) b64 += '='
+      const decoded = decodeURIComponent(escape(atob(b64)))
       const parts = decoded.split('|')
-      if (parts.length < 2) { setNotFound(true); setLoading(false); return }
 
-      setSertifikat({
-        kode: parts[0],
-        nama: parts[1],
-        jenis: parts[2] || 'Peserta',
-        nomor: parts[3] || parts[0]
-      })
+      if (parts.length >= 2) {
+        // New format: pipe-delimited
+        setSertifikat({
+          kode: parts[0],
+          nama: parts[1],
+          jenis: parts[2] || 'Peserta',
+          nomor: parts[3] || parts[0]
+        })
+      } else {
+        // Old format: just kode_unik — try to find in localStorage
+        const data = JSON.parse(localStorage.getItem('e_sertifikat_bimtek_pokjawas_v1') || '{}')
+        const found = (data.sertifikat || []).find(s => s.kode_unik === raw)
+        if (found) {
+          setSertifikat({
+            kode: found.kode_unik,
+            nama: found.peserta?.nama_lengkap || '-',
+            jenis: found.jenis_sertifikat || 'Peserta',
+            nomor: found.nomor_sertifikat || found.kode_unik
+          })
+        } else {
+          setNotFound(true)
+        }
+      }
     } catch (e) {
+      console.error('Verifikasi error:', e)
       setNotFound(true)
     }
     setLoading(false)
-  }, [])
+  }, [kode, encoded])
 
   if (loading) {
     return (
