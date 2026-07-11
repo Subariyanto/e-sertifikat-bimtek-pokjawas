@@ -108,6 +108,7 @@ const initializeData = () => {
         alamat_lembaga: 'Jember, Jawa Timur',
         nama_ketua: 'Subariyanto, S.Pd., M.Pd.I.',
         jabatan_ketua: 'Ketua Pokjawas Kabupaten Jember',
+        nip_ketua: '',
         nama_panitia: '',
         jabatan_panitia: '',
         format_nomor_sertifikat: '{nomor}/{kode_kegiatan}-POKJAWAS/JBR/{bulan_romawi}/{tahun}',
