@@ -328,6 +328,16 @@ export default function GenerateSertifikat() {
     tempDiv.style.height = '210mm'
     document.body.appendChild(tempDiv)
 
+    // Wait for all images to load before html2canvas
+    const imgs1 = tempDiv.querySelectorAll('img')
+    await Promise.all(Array.from(imgs1).map(img => {
+      if (img.complete && img.naturalWidth > 0) return Promise.resolve()
+      return new Promise(resolve => {
+        img.onload = resolve
+        img.onerror = resolve
+      })
+    }))
+
     const canvas = await html2canvas(tempDiv, {
       scale: 2,
       useCORS: true,
@@ -359,6 +369,16 @@ export default function GenerateSertifikat() {
     tempDiv2.style.width = '297mm'
     tempDiv2.style.height = '210mm'
     document.body.appendChild(tempDiv2)
+
+    // Wait for all images to load before html2canvas
+    const imgs2 = tempDiv2.querySelectorAll('img')
+    await Promise.all(Array.from(imgs2).map(img => {
+      if (img.complete && img.naturalWidth > 0) return Promise.resolve()
+      return new Promise(resolve => {
+        img.onload = resolve
+        img.onerror = resolve
+      })
+    }))
 
     const canvas2 = await html2canvas(tempDiv2, {
       scale: 2,
