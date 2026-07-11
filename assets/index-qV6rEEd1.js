@@ -417,25 +417,25 @@ Kode: ${b}`:u;return await Qe.toDataURL(f,{width:200,margin:1,color:{dark:"#0000
         <!-- Background Image -->
         <img src="${p.background_image}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
 
-        <!-- SERTIFIKAT Title -->
-        <div style="position: absolute; top: ${Math.max((p.pos_nomor_y||18)-10,5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
+        <!-- Lembaga + SERTIFIKAT Title -->
+        <div style="position: absolute; top: ${Math.max((p.pos_nomor_y||22)-16,3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
+          <p style="font-size: ${(p.font_nomor_size||9)+2}pt; color: ${p.font_nomor_color||"#064E3B"}; letter-spacing: 2px; margin: 0 0 6px 0; text-transform: uppercase; font-weight: bold;">Kelompok Kerja Pengawas Madrasah Kab. Jember</p>
           <h1 style="font-size: ${(p.font_nomor_size||9)+18}pt; color: ${p.font_nomor_color||"#064E3B"}; margin: 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">SERTIFIKAT</h1>
-          <p style="font-size: ${(p.font_nomor_size||9)+1}pt; color: ${p.font_nomor_color||"#064E3B"}; letter-spacing: 2px; margin: 4px 0 0 0; text-transform: uppercase;">Kelompok Kerja Pengawas Madrasah Kab. Jember</p>
         </div>
 
         <!-- Nomor Sertifikat -->
-        <div style="position: absolute; top: ${p.pos_nomor_y||18}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
+        <div style="position: absolute; top: ${p.pos_nomor_y||22}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
           <span style="font-size: ${p.font_nomor_size||9}pt; color: ${p.font_nomor_color||"#064E3B"}; letter-spacing: 1px;">No: ${$}</span>
         </div>
 
         <!-- Diberikan Kepada -->
-        <div style="position: absolute; top: ${Math.min((p.pos_nama_y||35)-6,(p.pos_nama_y||35)-6)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+        <div style="position: absolute; top: ${Math.min((p.pos_nama_y||41)-7,(p.pos_nama_y||41)-7)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
           <p style="font-size: ${p.font_narasi_size||11}pt; color: #555; margin: 0; font-style: italic;">Diberikan Kepada:</p>
         </div>
 
         <!-- Nama Peserta -->
-        <div style="position: absolute; top: ${p.pos_nama_y||35}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
-          <h2 style="font-size: ${p.font_nama_size||28}pt; color: ${p.font_nama_color||"#064E3B"}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">${u.nama_lengkap}</h2>
+        <div style="position: absolute; top: ${p.pos_nama_y||41}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
+          <h2 style="font-size: ${p.font_nama_size||28}pt; color: ${p.font_nama_color||"#064E3B"}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); line-height: 1.3; word-wrap: break-word; white-space: normal;">${u.nama_lengkap}</h2>
         </div>
 
         <!-- Narasi -->
