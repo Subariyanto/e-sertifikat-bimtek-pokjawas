@@ -221,7 +221,7 @@ import{r as m,a as Qe,N as qe,L as re,u as Be,b as Ye,H as Xe,R as ea,d as A}fro
           <p style="color: #666; font-size: 9pt; margin: 2px 0 0 0;">${F(p.tanggal_mulai)} s.d. ${F(p.tanggal_selesai)} &bull; ${p.tempat}</p>
         </div>
         <div style="position: relative; padding: 6mm 18mm 0 18mm; z-index: 1;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 13pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
             <thead>
               <tr style="background: ${z}; color: #ffffff;">
                 <th style="padding: 6px 10px; text-align: center; width: 6%;">No</th>
@@ -260,7 +260,7 @@ import{r as m,a as Qe,N as qe,L as re,u as Be,b as Ye,H as Xe,R as ea,d as A}fro
             <p style="color: #666; font-size: 8.5pt; margin: 2px 0 0 0;">${F(p.tanggal_mulai)} s.d. ${F(p.tanggal_selesai)} &bull; ${p.tempat}</p>
             <div style="width: 80mm; height: 1px; background: ${M}; margin: 6px auto 0;"></div>
           </div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 13pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
             <thead>
               <tr style="background: ${z}; color: #ffffff;">
                 <th style="padding: 5px 8px; text-align: center; width: 6%;">No</th>
