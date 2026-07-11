@@ -221,7 +221,7 @@ import{r as m,a as Qe,N as qe,L as re,u as Be,b as Ye,H as Xe,R as ea,d as A}fro
           <p style="color: #666; font-size: 9pt; margin: 2px 0 0 0;">${F(p.tanggal_mulai)} s.d. ${F(p.tanggal_selesai)} &bull; ${p.tempat}</p>
         </div>
         <div style="position: relative; padding: 6mm 18mm 0 18mm; z-index: 1;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13pt;">
             <thead>
               <tr style="background: ${z}; color: #ffffff;">
                 <th style="padding: 6px 10px; text-align: center; width: 6%;">No</th>
@@ -240,14 +240,14 @@ import{r as m,a as Qe,N as qe,L as re,u as Be,b as Ye,H as Xe,R as ea,d as A}fro
           </table>
         </div>
         <div style="position: absolute; bottom: 18mm; left: 50%; transform: translateX(-50%); text-align: center; z-index: 1;">
-          <p style="font-size: 12pt; color: #555; margin: 0 0 2px 0;">Jember, ${F(p.tanggal_selesai)}</p>
-          <p style="font-size: 12pt; color: #555; margin: 0 0 4px 0;">${u&&u.jabatan_ketua?u.jabatan_ketua:"Ketua Pokjawas Kab. Jember"}</p>
+          <p style="font-size: 13pt; color: #555; margin: 0 0 2px 0;">Jember, ${F(p.tanggal_selesai)}</p>
+          <p style="font-size: 13pt; color: #555; margin: 0 0 4px 0;">${u&&u.jabatan_ketua?u.jabatan_ketua:"Ketua Pokjawas Kab. Jember"}</p>
           <div style="margin: 4px auto; width: 90px; height: 90px;">
-            <img src="${k}" style="width: 90px; height: 90px; display: block;" />
+            <img src="${k}" style="width: 90px; height: 90px; display: block; margin: 0 auto;" />
           </div>
           <div style="min-width: 60mm; margin: 2px auto 0 auto;">
-            <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${z};">${u&&u.nama_ketua?u.nama_ketua:"Subariyanto, S.Pd., M.Pd.I."}</p>
-            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${u&&u.nip_ketua?u.nip_ketua:"-"}</p>
+            <p style="font-size: 13pt; margin: 0; font-weight: bold; color: ${z};">${u&&u.nama_ketua?u.nama_ketua:"Subariyanto, S.Pd., M.Pd.I."}</p>
+            <p style="font-size: 13pt; color: #555; margin: 1px 0 0 0;">NIP. ${u&&u.nip_ketua?u.nip_ketua:"-"}</p>
           </div>
         </div>
       </div>
@@ -260,7 +260,7 @@ import{r as m,a as Qe,N as qe,L as re,u as Be,b as Ye,H as Xe,R as ea,d as A}fro
             <p style="color: #666; font-size: 8.5pt; margin: 2px 0 0 0;">${F(p.tanggal_mulai)} s.d. ${F(p.tanggal_selesai)} &bull; ${p.tempat}</p>
             <div style="width: 80mm; height: 1px; background: ${M}; margin: 6px auto 0;"></div>
           </div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13pt;">
             <thead>
               <tr style="background: ${z}; color: #ffffff;">
                 <th style="padding: 5px 8px; text-align: center; width: 6%;">No</th>
@@ -279,14 +279,14 @@ import{r as m,a as Qe,N as qe,L as re,u as Be,b as Ye,H as Xe,R as ea,d as A}fro
           </table>
         </div>
         <div style="position: absolute; bottom: 12mm; left: 50%; transform: translateX(-50%); text-align: center;">
-          <p style="font-size: 12pt; color: #555; margin: 0 0 2px 0;">Jember, ${F(p.tanggal_selesai)}</p>
-          <p style="font-size: 12pt; color: #555; margin: 0 0 4px 0;">${u&&u.jabatan_ketua?u.jabatan_ketua:"Ketua Pokjawas Kab. Jember"}</p>
+          <p style="font-size: 13pt; color: #555; margin: 0 0 2px 0;">Jember, ${F(p.tanggal_selesai)}</p>
+          <p style="font-size: 13pt; color: #555; margin: 0 0 4px 0;">${u&&u.jabatan_ketua?u.jabatan_ketua:"Ketua Pokjawas Kab. Jember"}</p>
           <div style="margin: 4px auto; width: 90px; height: 90px;">
-            <img src="${k}" style="width: 90px; height: 90px; display: block;" />
+            <img src="${k}" style="width: 90px; height: 90px; display: block; margin: 0 auto;" />
           </div>
           <div style="min-width: 55mm; margin: 2px auto 0 auto;">
-            <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${z};">${u&&u.nama_ketua?u.nama_ketua:"Subariyanto, S.Pd., M.Pd.I."}</p>
-            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${u&&u.nip_ketua?u.nip_ketua:"-"}</p>
+            <p style="font-size: 13pt; margin: 0; font-weight: bold; color: ${z};">${u&&u.nama_ketua?u.nama_ketua:"Subariyanto, S.Pd., M.Pd.I."}</p>
+            <p style="font-size: 13pt; color: #555; margin: 1px 0 0 0;">NIP. ${u&&u.nip_ketua?u.nip_ketua:"-"}</p>
           </div>
         </div>
       </div>
@@ -385,7 +385,7 @@ import{r as m,a as Qe,N as qe,L as re,u as Be,b as Ye,H as Xe,R as ea,d as A}fro
             <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${F(p.tanggal_selesai)}</p>
             <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${(k==null?void 0:k.jabatan_ketua)||"Ketua Pokjawas Kab. Jember"}</p>
             <div style="margin: 4px auto; width: 90px; height: 90px;">
-              <img src="${z}" style="width: 90px; height: 90px; display: block;" />
+              <img src="${z}" style="width: 90px; height: 90px; display: block; margin: 0 auto;" />
             </div>
             <div style="min-width: 60mm; margin: 2px auto 0 auto;">
               <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${I};">${(k==null?void 0:k.nama_ketua)||"Subariyanto, S.Pd., M.Pd.I."}</p>
@@ -443,7 +443,7 @@ import{r as m,a as Qe,N as qe,L as re,u as Be,b as Ye,H as Xe,R as ea,d as A}fro
           <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${F(p.tanggal_selesai)}</p>
           <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${he}</p>
           <div style="margin: 4px auto; width: 90px; height: 90px;">
-            <img src="${z}" style="width: 90px; height: 90px; display: block;" />
+            <img src="${z}" style="width: 90px; height: 90px; display: block; margin: 0 auto;" />
           </div>
           <div style="min-width: 55mm; margin: 2px auto 0 auto;">
             <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${y.font_nama_color||"#064E3B"};">${ie}</p>
