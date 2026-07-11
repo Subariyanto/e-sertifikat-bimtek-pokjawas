@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import Sidebar from '../components/Sidebar'
-import { FileCheck, CheckCircle, XCircle, Eye, Trash2, Search } from 'lucide-react'
+import { FileCheck, CheckCircle, XCircle, Eye, Trash2, Search, CheckSquare, Square } from 'lucide-react'
 import { formatTanggalIndonesia } from '../lib/utils'
 
 export default function VerifikasiAdmin() {
   const [sertifikat, setSertifikat] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
+  const [selectedIds, setSelectedIds] = useState([])
   const [filterStatus, setFilterStatus] = useState('')
 
   useEffect(() => {
@@ -102,6 +103,42 @@ export default function VerifikasiAdmin() {
     }
   }
 
+  const handleDeleteSelected = async () => {
+    if (selectedIds.length === 0) {
+      alert('Pilih minimal satu sertifikat untuk dihapus')
+      return
+    }
+    if (!confirm(`Yakin ingin menghapus ${selectedIds.length} sertifikat terpilih?`)) return
+    
+    try {
+      const STORAGE_KEY = 'e_sertifikat_bimtek_pokjawas_v1'
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) {
+        const data = JSON.parse(raw)
+        data.sertifikat = data.sertifikat.filter(s => !selectedIds.includes(s.id))
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+      }
+      setSelectedIds([])
+      fetchSertifikat()
+      alert(`${selectedIds.length} sertifikat berhasil dihapus`)
+    } catch (error) {
+      console.error('Error deleting selected sertifikat:', error)
+      alert('Gagal menghapus sertifikat terpilih: ' + error.message)
+    }
+  }
+
+  const toggleSelect = (id) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
+  }
+
+  const toggleSelectAll = () => {
+    if (selectedIds.length === filteredSertifikat.length) {
+      setSelectedIds([])
+    } else {
+      setSelectedIds(filteredSertifikat.map(s => s.id))
+    }
+  }
+
   const filteredSertifikat = sertifikat.filter(s => {
     const matchSearch = !searchTerm || 
       s.nomor_sertifikat.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -120,18 +157,29 @@ export default function VerifikasiAdmin() {
       <div className="flex-1 p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 flex items-center justify-between flex-wrap gap-3">
             <div>
               <h1 className="text-3xl font-bold text-kemenag-green mb-2">Verifikasi Sertifikat</h1>
               <p className="text-gray-600">Kelola dan monitor sertifikat yang telah diterbitkan</p>
             </div>
-            <button
-              onClick={handleDeleteAll}
-              className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-            >
-              <Trash2 size={20} />
-              Hapus Semua
-            </button>
+            <div className="flex gap-2">
+              {selectedIds.length > 0 && (
+                <button
+                  onClick={handleDeleteSelected}
+                  className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors"
+                >
+                  <Trash2 size={20} />
+                  Hapus Terpilih ({selectedIds.length})
+                </button>
+              )}
+              <button
+                onClick={handleDeleteAll}
+                className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+              >
+                <Trash2 size={20} />
+                Hapus Semua
+              </button>
+            </div>
           </div>
 
           {/* Filters */}
@@ -220,6 +268,11 @@ export default function VerifikasiAdmin() {
                 <table className="w-full">
                   <thead className="bg-gray-50">
                     <tr>
+                      <th className="py-3 px-4 w-10">
+                        <button onClick={toggleSelectAll} className="text-gray-600 hover:text-kemenag-green">
+                          {selectedIds.length === filteredSertifikat.length && filteredSertifikat.length > 0 ? <CheckSquare size={18} /> : <Square size={18} />}
+                        </button>
+                      </th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-700">Nomor Sertifikat</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-700">Nama Peserta</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-700">Kegiatan</th>
@@ -231,7 +284,15 @@ export default function VerifikasiAdmin() {
                   </thead>
                   <tbody>
                     {filteredSertifikat.map((item) => (
-                      <tr key={item.id} className="border-t border-gray-100 hover:bg-gray-50">
+                      <tr key={item.id} className={`border-t border-gray-100 hover:bg-gray-50 ${selectedIds.includes(item.id) ? 'bg-amber-50' : ''}`}>
+                        <td className="py-3 px-4">
+                          <input
+                            type="checkbox"
+                            checked={selectedIds.includes(item.id)}
+                            onChange={() => toggleSelect(item.id)}
+                            className="w-4 h-4 rounded"
+                          />
+                        </td>
                         <td className="py-3 px-4 font-medium text-sm">{item.nomor_sertifikat}</td>
                         <td className="py-3 px-4">
                           <div>
