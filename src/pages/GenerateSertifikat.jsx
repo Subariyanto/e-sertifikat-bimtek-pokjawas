@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import Sidebar from '../components/Sidebar'
-import { Award, Download, Eye, FileDown, Loader } from 'lucide-react'
+import { Award, Download, Eye, FileDown, Loader, UserCheck, CheckSquare, Square } from 'lucide-react'
 import QRCode from 'qrcode'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
@@ -20,6 +20,8 @@ export default function GenerateSertifikat() {
   const [selectedTemplate, setSelectedTemplate] = useState('')
   const [selectedJenis, setSelectedJenis] = useState('')
   const [previewData, setPreviewData] = useState(null)
+  const [selectedPesertaIds, setSelectedPesertaIds] = useState([])
+  const [showPesertaList, setShowPesertaList] = useState(false)
 
   useEffect(() => {
     fetchData()
@@ -426,6 +428,70 @@ export default function GenerateSertifikat() {
     }
   }
 
+  const handleGenerateSelected = async () => {
+    if (!selectedKegiatan || !selectedTemplate) {
+      alert('Pilih kegiatan dan template terlebih dahulu')
+      return
+    }
+    if (selectedPesertaIds.length === 0) {
+      alert('Pilih minimal satu peserta')
+      return
+    }
+
+    const selectedPesertaList = filteredPeserta.filter(p => selectedPesertaIds.includes(p.id))
+    if (selectedPesertaList.length === 0) {
+      alert('Peserta terpilih tidak ditemukan')
+      return
+    }
+
+    setGenerating(true)
+    try {
+      if (selectedPesertaList.length === 1) {
+        const nomorUrut = await getNextNomorUrut(selectedKegiatan)
+        const { pdf, filename } = await generateSertifikatPDF(selectedPesertaList[0], nomorUrut)
+        pdf.save(filename)
+        alert('Sertifikat berhasil digenerate!')
+      } else {
+        const zip = new JSZip()
+        let nomorUrut = await getNextNomorUrut(selectedKegiatan)
+        for (let i = 0; i < selectedPesertaList.length; i++) {
+          const { pdf, filename } = await generateSertifikatPDF(selectedPesertaList[i], nomorUrut + i)
+          const pdfBlob = pdf.output('blob')
+          zip.file(filename, pdfBlob)
+        }
+        const zipBlob = await zip.generateAsync({ type: 'blob' })
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(zipBlob)
+        link.download = `Sertifikat_Terpilih_${kegiatan.find(k => k.id === selectedKegiatan).nama_kegiatan.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.zip`
+        link.click()
+        alert(`${selectedPesertaList.length} sertifikat berhasil digenerate!`)
+      }
+      setSelectedPesertaIds([])
+      fetchPeserta(selectedKegiatan)
+    } catch (error) {
+      console.error('Error generating selected sertifikat:', error)
+      alert('Gagal generate sertifikat: ' + error.message)
+    } finally {
+      setGenerating(false)
+    }
+  }
+
+  const togglePeserta = (id) => {
+    setSelectedPesertaIds(prev => 
+      prev.includes(id) 
+        ? prev.filter(x => x !== id)
+        : [...prev, id]
+    )
+  }
+
+  const toggleSelectAll = () => {
+    if (selectedPesertaIds.length === filteredPeserta.length) {
+      setSelectedPesertaIds([])
+    } else {
+      setSelectedPesertaIds(filteredPeserta.map(p => p.id))
+    }
+  }
+
   const renderCertificateHTML = ({ kegiatan, template, peserta, pengaturan, nomorSertifikat, qrDataUrl }) => {
     // If template has background_image, use image overlay mode
     if (template.background_image) {
@@ -739,14 +805,55 @@ export default function GenerateSertifikat() {
 
             {selectedKegiatan && (
               <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                <p className="text-sm text-blue-800">
-                  <strong>Jumlah peserta:</strong> {filteredPeserta.length} orang
-                  {selectedJenis && ` (${selectedJenis})`}
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-blue-800">
+                    <strong>Jumlah peserta:</strong> {filteredPeserta.length} orang
+                    {selectedJenis && ` (${selectedJenis})`}
+                    {selectedPesertaIds.length > 0 && ` | Terpilih: ${selectedPesertaIds.length}`}
+                  </p>
+                  <button
+                    onClick={() => { setShowPesertaList(!showPesertaList); if (showPesertaList) setSelectedPesertaIds([]) }}
+                    className="flex items-center gap-2 bg-white border border-blue-300 text-blue-700 px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors text-sm"
+                  >
+                    <UserCheck size={16} />
+                    {showPesertaList ? 'Sembunyikan' : 'Pilih Peserta'}
+                  </button>
+                </div>
               </div>
             )}
 
-            <div className="flex gap-3">
+            {showPesertaList && selectedKegiatan && filteredPeserta.length > 0 && (
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4 max-h-64 overflow-y-auto">
+                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
+                  <button
+                    onClick={toggleSelectAll}
+                    className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-kemenag-green"
+                  >
+                    {selectedPesertaIds.length === filteredPeserta.length ? <CheckSquare size={18} /> : <Square size={18} />}
+                    {selectedPesertaIds.length === filteredPeserta.length ? 'Hapus Semua Pilihan' : 'Pilih Semua'}
+                  </button>
+                </div>
+                <div className="space-y-1">
+                  {filteredPeserta.map((p) => (
+                    <label
+                      key={p.id}
+                      className={`flex items-center gap-3 p-2 rounded cursor-pointer transition-colors ${selectedPesertaIds.includes(p.id) ? 'bg-emerald-50' : 'hover:bg-gray-100'}`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedPesertaIds.includes(p.id)}
+                        onChange={() => togglePeserta(p.id)}
+                        className="w-4 h-4 rounded"
+                      />
+                      <span className="text-sm text-gray-800 flex-1">{p.nama_lengkap}</span>
+                      <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded">{p.jenis_sertifikat}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex gap-3 flex-wrap">
               <button
                 onClick={handlePreview}
                 disabled={!selectedKegiatan || !selectedTemplate || generating}
@@ -772,6 +879,25 @@ export default function GenerateSertifikat() {
                   </>
                 )}
               </button>
+              {showPesertaList && selectedPesertaIds.length > 0 && (
+                <button
+                  onClick={handleGenerateSelected}
+                  disabled={!selectedKegiatan || !selectedTemplate || generating}
+                  className="flex items-center gap-2 bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {generating ? (
+                    <>
+                      <Loader size={20} className="animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Download size={20} />
+                      Generate Terpilih ({selectedPesertaIds.length})
+                    </>
+                  )}
+                </button>
+              )}
             </div>
           </div>
 
