@@ -159,7 +159,7 @@ export default function GenerateSertifikat() {
     })
   }
 
-  const renderMateriHTML = ({ kegiatan, materiList, pengaturan }) => {
+  const renderMateriHTML = ({ kegiatan, materiList, pengaturan, qrDataUrl }) => {
     const bgColor = '#064E3B'
     const accentColor = '#D4AF37'
     const totalJP = materiList.reduce((sum, m) => sum + (parseInt(m.jumlah_jp) || 0), 0)
@@ -215,7 +215,7 @@ export default function GenerateSertifikat() {
     `
   }
 
-  const renderMateriHTMLSimple = ({ kegiatan, materiList, pengaturan }) => {
+  const renderMateriHTMLSimple = ({ kegiatan, materiList, pengaturan, qrDataUrl }) => {
     const bgColor = '#064E3B'
     const accentColor = '#D4AF37'
     const totalJP = materiList.reduce((sum, m) => sum + (parseInt(m.jumlah_jp) || 0), 0)
@@ -343,8 +343,8 @@ export default function GenerateSertifikat() {
     pdf.addPage()
 
     const materiHTML = templateData && templateData.background_image
-      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan })
-      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan })
+      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl })
+      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl })
 
     const tempDiv2 = document.createElement('div')
     tempDiv2.innerHTML = materiHTML
