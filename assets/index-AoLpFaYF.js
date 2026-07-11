@@ -439,31 +439,31 @@ Kode: ${h}`:u;return await aa.toDataURL(j,{width:200,margin:1,color:{dark:"#0000
         <img src="${y.background_image}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
 
         <!-- Lembaga + SERTIFIKAT + No (merged, no gap) -->
-        <div style="position: absolute; top: ${Math.max(36,3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
+        <div style="position: absolute; top: ${Math.max(26,3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
           <p style="font-size: ${(y.font_nomor_size||9)+2}pt; color: ${y.font_nomor_color||"#064E3B"}; letter-spacing: 2px; margin: 0 0 6px 0; text-transform: uppercase; font-weight: bold;">Kelompok Kerja Pengawas Madrasah Kab. Jember</p>
           <h1 style="font-size: ${(y.font_nomor_size||9)+18}pt; color: ${y.font_nomor_color||"#064E3B"}; margin: 0 0 2px 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">SERTIFIKAT</h1>
           <span style="font-size: ${y.font_nomor_size||9}pt; color: ${y.font_nomor_color||"#064E3B"}; letter-spacing: 1px; display: block;">No: ${M}</span>
         </div>
 
         <!-- Diberikan Kepada -->
-        <div style="position: absolute; top: ${Math.min(63,63)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+        <div style="position: absolute; top: ${Math.min(53,53)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
           <p style="font-size: ${y.font_narasi_size||11}pt; color: #555; margin: 0; font-style: italic;">Diberikan Kepada:</p>
         </div>
 
         <!-- Nama Peserta -->
-        <div style="position: absolute; top: 68%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
+        <div style="position: absolute; top: 58%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
           <h2 style="font-size: ${y.font_nama_size||28}pt; color: ${y.font_nama_color||"#064E3B"}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); line-height: 1.3; word-wrap: break-word; white-space: normal;">${u.nama_lengkap}</h2>
         </div>
 
         <!-- Narasi -->
-        <div style="position: absolute; top: 74%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
+        <div style="position: absolute; top: 64%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
           <p style="font-size: ${y.font_narasi_size||11}pt; color: ${y.font_narasi_color||"#333333"}; text-align: justify; text-justify: inter-word; margin: 0;">
             ${A}
           </p>
         </div>
 
         <!-- QR Code -->
-        <div style="position: absolute; top: 82%; left: 5%; z-index: 2; text-align: center;">
+        <div style="position: absolute; top: 80%; left: 5%; z-index: 2; text-align: center;">
           <div style="border: 1px solid rgba(0,0,0,0.2); padding: 3px; background: rgba(255,255,255,0.8); border-radius: 4px; display: inline-block;">
             <img src="${E}" style="width: ${oe}px; height: ${oe}px; display: block;" />
           </div>
@@ -471,7 +471,7 @@ Kode: ${h}`:u;return await aa.toDataURL(j,{width:200,margin:1,color:{dark:"#0000
         </div>
 
         <!-- Tanda Tangan (center, font 14, no line) -->
-        <div style="position: absolute; top: 78%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
+        <div style="position: absolute; top: 76%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
           <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${O(h.tanggal_selesai)}</p>
           <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${be}</p>
           <div style="height: 30px;"></div>
