@@ -182,7 +182,7 @@ export default function GenerateSertifikat() {
           <p style="color: #666; font-size: 9pt; margin: 2px 0 0 0;">${formatTanggalIndonesia(kegiatan.tanggal_mulai)} s.d. ${formatTanggalIndonesia(kegiatan.tanggal_selesai)} &bull; ${kegiatan.tempat}</p>
         </div>
         <div style="position: relative; padding: 6mm 18mm 0 18mm; z-index: 1;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13pt;">
             <thead>
               <tr style="background: ${bgColor}; color: #ffffff;">
                 <th style="padding: 6px 10px; text-align: center; width: 6%;">No</th>
@@ -201,14 +201,14 @@ export default function GenerateSertifikat() {
           </table>
         </div>
         <div style="position: absolute; bottom: 18mm; left: 50%; transform: translateX(-50%); text-align: center; z-index: 1;">
-          <p style="font-size: 12pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
-          <p style="font-size: 12pt; color: #555; margin: 0 0 4px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
+          <p style="font-size: 13pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
+          <p style="font-size: 13pt; color: #555; margin: 0 0 4px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
           <div style="margin: 4px auto; width: 90px; height: 90px;">
-            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block;" />
+            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block; margin: 0 auto;" />
           </div>
           <div style="min-width: 60mm; margin: 2px auto 0 auto;">
-            <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
-            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${pengaturan && pengaturan.nip_ketua ? pengaturan.nip_ketua : '-'}</p>
+            <p style="font-size: 13pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+            <p style="font-size: 13pt; color: #555; margin: 1px 0 0 0;">NIP. ${pengaturan && pengaturan.nip_ketua ? pengaturan.nip_ketua : '-'}</p>
           </div>
         </div>
       </div>
@@ -228,7 +228,7 @@ export default function GenerateSertifikat() {
             <p style="color: #666; font-size: 8.5pt; margin: 2px 0 0 0;">${formatTanggalIndonesia(kegiatan.tanggal_mulai)} s.d. ${formatTanggalIndonesia(kegiatan.tanggal_selesai)} &bull; ${kegiatan.tempat}</p>
             <div style="width: 80mm; height: 1px; background: ${accentColor}; margin: 6px auto 0;"></div>
           </div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13pt;">
             <thead>
               <tr style="background: ${bgColor}; color: #ffffff;">
                 <th style="padding: 5px 8px; text-align: center; width: 6%;">No</th>
@@ -247,14 +247,14 @@ export default function GenerateSertifikat() {
           </table>
         </div>
         <div style="position: absolute; bottom: 12mm; left: 50%; transform: translateX(-50%); text-align: center;">
-          <p style="font-size: 12pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
-          <p style="font-size: 12pt; color: #555; margin: 0 0 4px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
+          <p style="font-size: 13pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
+          <p style="font-size: 13pt; color: #555; margin: 0 0 4px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
           <div style="margin: 4px auto; width: 90px; height: 90px;">
-            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block;" />
+            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block; margin: 0 auto;" />
           </div>
           <div style="min-width: 55mm; margin: 2px auto 0 auto;">
-            <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
-            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${pengaturan && pengaturan.nip_ketua ? pengaturan.nip_ketua : '-'}</p>
+            <p style="font-size: 13pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+            <p style="font-size: 13pt; color: #555; margin: 1px 0 0 0;">NIP. ${pengaturan && pengaturan.nip_ketua ? pengaturan.nip_ketua : '-'}</p>
           </div>
         </div>
       </div>
@@ -552,7 +552,7 @@ export default function GenerateSertifikat() {
             <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
             <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'}</p>
             <div style="margin: 4px auto; width: 90px; height: 90px;">
-              <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block;" />
+              <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block; margin: 0 auto;" />
             </div>
             <div style="min-width: 60mm; margin: 2px auto 0 auto;">
               <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan?.nama_ketua || 'Subariyanto, S.Pd., M.Pd.I.'}</p>
@@ -644,7 +644,7 @@ export default function GenerateSertifikat() {
           <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
           <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${jabatanTtd}</p>
           <div style="margin: 4px auto; width: 90px; height: 90px;">
-            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block;" />
+            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block; margin: 0 auto;" />
           </div>
           <div style="min-width: 55mm; margin: 2px auto 0 auto;">
             <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${template.font_nama_color || '#064E3B'};">${namaTtd}</p>
