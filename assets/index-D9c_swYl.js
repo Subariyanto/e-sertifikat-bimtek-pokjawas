@@ -417,29 +417,25 @@ Kode: ${b}`:u;return await Qe.toDataURL(f,{width:200,margin:1,color:{dark:"#0000
         <!-- Background Image -->
         <img src="${p.background_image}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
 
-        <!-- Lembaga + SERTIFIKAT Title -->
-        <div style="position: absolute; top: ${Math.max((p.pos_nomor_y||25)-16,3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
+        <!-- Lembaga + SERTIFIKAT + No (merged, no gap) -->
+        <div style="position: absolute; top: ${Math.max((p.pos_nomor_y||34)-16,3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
           <p style="font-size: ${(p.font_nomor_size||9)+2}pt; color: ${p.font_nomor_color||"#064E3B"}; letter-spacing: 2px; margin: 0 0 6px 0; text-transform: uppercase; font-weight: bold;">Kelompok Kerja Pengawas Madrasah Kab. Jember</p>
-          <h1 style="font-size: ${(p.font_nomor_size||9)+18}pt; color: ${p.font_nomor_color||"#064E3B"}; margin: 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">SERTIFIKAT</h1>
-        </div>
-
-        <!-- Nomor Sertifikat -->
-        <div style="position: absolute; top: ${p.pos_nomor_y||25}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
-          <span style="font-size: ${p.font_nomor_size||9}pt; color: ${p.font_nomor_color||"#064E3B"}; letter-spacing: 1px;">No: ${$}</span>
+          <h1 style="font-size: ${(p.font_nomor_size||9)+18}pt; color: ${p.font_nomor_color||"#064E3B"}; margin: 0 0 2px 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">SERTIFIKAT</h1>
+          <span style="font-size: ${p.font_nomor_size||9}pt; color: ${p.font_nomor_color||"#064E3B"}; letter-spacing: 1px; display: block;">No: ${$}</span>
         </div>
 
         <!-- Diberikan Kepada -->
-        <div style="position: absolute; top: ${Math.min((p.pos_nama_y||44)-5,(p.pos_nama_y||44)-5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+        <div style="position: absolute; top: ${Math.min((p.pos_nama_y||53)-5,(p.pos_nama_y||53)-5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
           <p style="font-size: ${p.font_narasi_size||11}pt; color: #555; margin: 0; font-style: italic;">Diberikan Kepada:</p>
         </div>
 
         <!-- Nama Peserta -->
-        <div style="position: absolute; top: ${p.pos_nama_y||44}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
+        <div style="position: absolute; top: ${p.pos_nama_y||53}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
           <h2 style="font-size: ${p.font_nama_size||28}pt; color: ${p.font_nama_color||"#064E3B"}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); line-height: 1.3; word-wrap: break-word; white-space: normal;">${u.nama_lengkap}</h2>
         </div>
 
         <!-- Narasi -->
-        <div style="position: absolute; top: ${p.pos_narasi_y||47}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
+        <div style="position: absolute; top: ${p.pos_narasi_y||56}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
           <p style="font-size: ${p.font_narasi_size||11}pt; color: ${p.font_narasi_color||"#333333"}; text-align: justify; text-justify: inter-word; margin: 0;">
             ${J}
           </p>
