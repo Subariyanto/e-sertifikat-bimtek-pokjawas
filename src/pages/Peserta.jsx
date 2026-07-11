@@ -139,17 +139,23 @@ export default function Peserta() {
     if (!konfirmasi2) return
     
     try {
-      const { error } = await supabase
-        .from('peserta')
-        .delete()
-        .neq('id', '00000000-0000-0000-0000-000000000000')
-      
-      if (error) throw error
+      // Direct localStorage manipulation for reliability
+      const STORAGE_KEY = 'e_sertifikat_bimtek_pokjawas_v1'
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) {
+        const data = JSON.parse(raw)
+        data.peserta = []
+        // Also clean up sertifikat qr_url to free space
+        if (data.sertifikat) {
+          data.sertifikat.forEach(s => { s.qr_url = '' })
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+      }
       fetchPeserta()
       alert('Semua data peserta berhasil dihapus')
     } catch (error) {
       console.error('Error deleting all peserta:', error)
-      alert('Gagal menghapus semua peserta')
+      alert('Gagal menghapus semua peserta: ' + error.message)
     }
   }
 

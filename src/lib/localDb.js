@@ -340,6 +340,11 @@ class DeleteBuilder {
     return this
   }
 
+  neq(field, value) {
+    this.filters.push({ field, op: 'neq', value })
+    return this
+  }
+
   async then(resolve) {
     try {
       const data = getData()
@@ -348,6 +353,7 @@ class DeleteBuilder {
       data[this.table] = data[this.table].filter(item => {
         const matches = this.filters.every(filter => {
           if (filter.op === 'eq') return item[filter.field] === filter.value
+          if (filter.op === 'neq') return item[filter.field] !== filter.value
           return true
         })
         return !matches
