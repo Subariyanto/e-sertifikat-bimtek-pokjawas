@@ -596,24 +596,24 @@ export default function GenerateSertifikat() {
         </div>
 
         <!-- Diberikan Kepada -->
-        <div style="position: absolute; top: ${Math.min(44 - 5, 44 - 5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+        <div style="position: absolute; top: ${Math.min(33 - 5, 33 - 5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
           <p style="font-size: ${(template.font_narasi_size || 11)}pt; color: #555; margin: 0; font-style: italic;">Diberikan Kepada:</p>
         </div>
 
         <!-- Nama Peserta -->
-        <div style="position: absolute; top: 44%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
+        <div style="position: absolute; top: 33%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
           <h2 style="font-size: ${template.font_nama_size || 28}pt; color: ${template.font_nama_color || '#064E3B'}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); line-height: 1.3; word-wrap: break-word; white-space: normal;">${peserta.nama_lengkap}</h2>
         </div>
 
         <!-- Narasi -->
-        <div style="position: absolute; top: 50%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
+        <div style="position: absolute; top: 44%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
           <p style="font-size: ${template.font_narasi_size || 11}pt; color: ${template.font_narasi_color || '#333333'}; text-align: justify; text-justify: inter-word; margin: 0;">
             ${narasiFinal}
           </p>
         </div>
 
         <!-- QR Code -->
-        <div style="position: absolute; top: 66%; left: 5%; z-index: 2; text-align: center;">
+        <div style="position: absolute; top: 72%; left: 5%; z-index: 2; text-align: center;">
           <div style="border: 1px solid rgba(0,0,0,0.2); padding: 3px; background: rgba(255,255,255,0.8); border-radius: 4px; display: inline-block;">
             <img src="${qrDataUrl}" style="width: ${qrSize}px; height: ${qrSize}px; display: block;" />
           </div>
@@ -621,7 +621,7 @@ export default function GenerateSertifikat() {
         </div>
 
         <!-- Tanda Tangan (center, font 14, no line) -->
-        <div style="position: absolute; top: 62%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
+        <div style="position: absolute; top: 68%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
           <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
           <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${jabatanTtd}</p>
           <div style="height: 30px;"></div>
