@@ -71,23 +71,13 @@ export default function GenerateSertifikat() {
 
   const generateQRCode = async (kodeUnik, pesertaData, sertifikatInfo) => {
     try {
-      // Minimal data for QR (short keys to keep URL small)
+      // Minimal data: only 4 fields for small QR
       const d = sertifikatInfo || {}
       const v = [
         d.kode || kodeUnik,
         d.nama || pesertaData?.nama_lengkap || '',
-        d.nip || pesertaData?.nip_nik || '-',
         d.jenis || 'Peserta',
-        d.nomor || '',
-        d.kegiatan_nama || '',
-        d.kegiatan_tanggal_mulai || '',
-        d.kegiatan_tanggal_selesai || '',
-        d.kegiatan_tempat || '-',
-        d.kegiatan_jp || 0,
-        d.kegiatan_penyelenggara || '-',
-        d.tanggal_terbit || '',
-        d.instansi || '-',
-        d.jabatan || '-'
+        d.nomor || ''
       ]
       const encoded = btoa(unescape(encodeURIComponent(v.join('|')))).replace(/\+/g, '-').replace(/\//g, '_')
       const verifyUrl = `${window.location.origin}${window.location.pathname}#/v/${encoded}`
