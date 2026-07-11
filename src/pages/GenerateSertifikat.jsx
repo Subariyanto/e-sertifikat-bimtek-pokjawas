@@ -69,10 +69,16 @@ export default function GenerateSertifikat() {
     }
   }
 
-  const generateQRCode = async (kodeUnik, pesertaData) => {
+  const generateQRCode = async (kodeUnik, pesertaData, sertifikatInfo) => {
     try {
-      const verifyUrl = `${window.location.origin}${window.location.pathname}#/verifikasi/${kodeUnik}`
-      // QR contains pure verification URL (no login required)
+      // Embed sertifikat data in URL as base64 for offline verification
+      const verifyData = sertifikatInfo || {
+        kode: kodeUnik,
+        nama: pesertaData?.nama_lengkap || '',
+        nip: pesertaData?.nip_nik || '',
+      }
+      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(verifyData)))).replace(/\+/g, '-').replace(/\//g, '_')
+      const verifyUrl = `${window.location.origin}${window.location.pathname}#/verifikasi/${encoded}`
       const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
         width: 200,
         margin: 1,
@@ -123,7 +129,6 @@ export default function GenerateSertifikat() {
     const pesertaData = filteredPeserta[0]
 
     const kodeUnik = generateKodeUnik()
-    const qrDataUrl = await generateQRCode(kodeUnik, pesertaData)
     const nomorUrut = await getNextNomorUrut(selectedKegiatan)
     const nomorSertifikat = generateNomorSertifikat(
       pengaturan?.format_nomor_sertifikat || '{nomor}/{kode_kegiatan}-POKJAWAS/JBR/{bulan_romawi}/{tahun}',
@@ -131,6 +136,23 @@ export default function GenerateSertifikat() {
       kegiatanData.jenis_kegiatan.toUpperCase(),
       new Date()
     )
+    const qrDataUrl = await generateQRCode(kodeUnik, pesertaData, {
+      kode: kodeUnik,
+      nama: pesertaData.nama_lengkap,
+      nip: pesertaData.nip_nik || '-',
+      jenis: pesertaData.jenis_sertifikat || 'Peserta',
+      instansi: pesertaData.instansi || '-',
+      jabatan: pesertaData.jabatan || '-',
+      nomor: nomorSertifikat,
+      kegiatan_nama: kegiatanData.nama_kegiatan,
+      kegiatan_jenis: kegiatanData.jenis_kegiatan,
+      kegiatan_tanggal_mulai: kegiatanData.tanggal_mulai,
+      kegiatan_tanggal_selesai: kegiatanData.tanggal_selesai,
+      kegiatan_tempat: kegiatanData.tempat || '-',
+      kegiatan_jp: kegiatanData.jumlah_jp || 0,
+      kegiatan_penyelenggara: kegiatanData.penyelenggara || '-',
+      tanggal_terbit: new Date().toISOString().split('T')[0]
+    })
 
     setPreviewData({
       kegiatan: kegiatanData,
@@ -242,13 +264,29 @@ export default function GenerateSertifikat() {
     const templateData = templates.find(t => t.id === selectedTemplate)
     
     const kodeUnik = generateKodeUnik()
-    const qrDataUrl = await generateQRCode(kodeUnik, pesertaData)
     const nomorSertifikat = generateNomorSertifikat(
       pengaturan?.format_nomor_sertifikat || '{nomor}/{kode_kegiatan}-POKJAWAS/JBR/{bulan_romawi}/{tahun}',
       nomorUrut,
       kegiatanData.jenis_kegiatan.toUpperCase(),
       new Date()
     )
+    const qrDataUrl = await generateQRCode(kodeUnik, pesertaData, {
+      kode: kodeUnik,
+      nama: pesertaData.nama_lengkap,
+      nip: pesertaData.nip_nik || '-',
+      jenis: pesertaData.jenis_sertifikat || 'Peserta',
+      instansi: pesertaData.instansi || '-',
+      jabatan: pesertaData.jabatan || '-',
+      nomor: nomorSertifikat,
+      kegiatan_nama: kegiatanData.nama_kegiatan,
+      kegiatan_jenis: kegiatanData.jenis_kegiatan,
+      kegiatan_tanggal_mulai: kegiatanData.tanggal_mulai,
+      kegiatan_tanggal_selesai: kegiatanData.tanggal_selesai,
+      kegiatan_tempat: kegiatanData.tempat || '-',
+      kegiatan_jp: kegiatanData.jumlah_jp || 0,
+      kegiatan_penyelenggara: kegiatanData.penyelenggara || '-',
+      tanggal_terbit: new Date().toISOString().split('T')[0]
+    })
 
     // Simpan ke database
     const { data: sertifikatData, error: insertError } = await supabase
