@@ -517,7 +517,7 @@ export default function GenerateSertifikat() {
 
         <!-- Narasi -->
         <div style="text-align: center; padding: 8mm 35mm 0 35mm; line-height: 1.9; position: relative; z-index: 1;">
-          <p style="font-size: 10.5pt; color: #333; text-align: justify; text-justify: inter-word; margin: 0;">
+          <p style="font-size: 13pt; color: #333; text-align: justify; text-justify: inter-word; margin: 0;">
             ${narasiFinal}
           </p>
         </div>
@@ -634,7 +634,7 @@ export default function GenerateSertifikat() {
 
         <!-- Narasi -->
         <div style="position: absolute; top: 44%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
-          <p style="font-size: ${template.font_narasi_size || 11}pt; color: ${template.font_narasi_color || '#333333'}; text-align: justify; text-justify: inter-word; margin: 0;">
+          <p style="font-size: 13pt; color: ${template.font_narasi_color || '#333333'}; text-align: justify; text-justify: inter-word; margin: 0;">
             ${narasiFinal}
           </p>
         </div>
