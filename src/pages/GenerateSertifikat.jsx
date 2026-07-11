@@ -588,24 +588,24 @@ export default function GenerateSertifikat() {
         <img src="${template.background_image}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
 
         <!-- Lembaga + SERTIFIKAT + No (merged, no gap) -->
-        <div style="position: absolute; top: ${Math.max((template.pos_nomor_y || 46) - 16, 3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
+        <div style="position: absolute; top: ${Math.max((template.pos_nomor_y || 52) - 16, 3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
           <p style="font-size: ${(template.font_nomor_size || 9) + 2}pt; color: ${template.font_nomor_color || '#064E3B'}; letter-spacing: 2px; margin: 0 0 6px 0; text-transform: uppercase; font-weight: bold;">Kelompok Kerja Pengawas Madrasah Kab. Jember</p>
           <h1 style="font-size: ${(template.font_nomor_size || 9) + 18}pt; color: ${template.font_nomor_color || '#064E3B'}; margin: 0 0 2px 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">SERTIFIKAT</h1>
           <span style="font-size: ${template.font_nomor_size || 9}pt; color: ${template.font_nomor_color || '#064E3B'}; letter-spacing: 1px; display: block;">No: ${nomorSertifikat}</span>
         </div>
 
         <!-- Diberikan Kepada -->
-        <div style="position: absolute; top: ${Math.min((template.pos_nama_y || 65) - 5, (template.pos_nama_y || 65) - 5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+        <div style="position: absolute; top: ${Math.min((template.pos_nama_y || 71) - 5, (template.pos_nama_y || 71) - 5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
           <p style="font-size: ${(template.font_narasi_size || 11)}pt; color: #555; margin: 0; font-style: italic;">Diberikan Kepada:</p>
         </div>
 
         <!-- Nama Peserta -->
-        <div style="position: absolute; top: ${template.pos_nama_y || 65}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
+        <div style="position: absolute; top: ${template.pos_nama_y || 71}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
           <h2 style="font-size: ${template.font_nama_size || 28}pt; color: ${template.font_nama_color || '#064E3B'}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); line-height: 1.3; word-wrap: break-word; white-space: normal;">${peserta.nama_lengkap}</h2>
         </div>
 
         <!-- Narasi -->
-        <div style="position: absolute; top: ${template.pos_narasi_y || 67}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
+        <div style="position: absolute; top: ${template.pos_narasi_y || 73}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
           <p style="font-size: ${template.font_narasi_size || 11}pt; color: ${template.font_narasi_color || '#333333'}; text-align: justify; text-justify: inter-word; margin: 0;">
             ${narasiFinal}
           </p>
