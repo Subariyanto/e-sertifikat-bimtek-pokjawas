@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { 
   Home, FileText, Users, Layout, FileCheck, Settings, 
-  Menu, X, LogOut, Award, BookOpen 
+  Menu, X, LogOut, Award, BookOpen, Database 
 } from 'lucide-react'
 
 export default function Sidebar() {
@@ -21,6 +21,7 @@ export default function Sidebar() {
     { icon: Award, label: 'Generate Sertifikat', path: '/generate' },
     { icon: FileCheck, label: 'Verifikasi Sertifikat', path: '/verifikasi-admin' },
     { icon: Settings, label: 'Pengaturan', path: '/pengaturan' },
+    { icon: Database, label: 'Backup & Restore', path: '/backup-restore' },
   ]
 
   const handleLogout = async () => {

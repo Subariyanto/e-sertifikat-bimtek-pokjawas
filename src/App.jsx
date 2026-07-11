@@ -12,6 +12,7 @@ import Materi from './pages/Materi'
 import Templates from './pages/Templates'
 import Pengaturan from './pages/Pengaturan'
 import VerifikasiAdmin from './pages/VerifikasiAdmin'
+import BackupRestore from './pages/BackupRestore'
 import './index.css'
 
 function App() {
@@ -64,6 +65,11 @@ function App() {
           <Route path="/pengaturan" element={
             <ProtectedRoute>
               <Pengaturan />
+            </ProtectedRoute>
+          } />
+          <Route path="/backup-restore" element={
+            <ProtectedRoute>
+              <BackupRestore />
             </ProtectedRoute>
           } />
 
