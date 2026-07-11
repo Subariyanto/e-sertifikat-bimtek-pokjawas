@@ -76,6 +76,32 @@ export default function VerifikasiAdmin() {
     }
   }
 
+  const handleDeleteAll = async () => {
+    if (sertifikat.length === 0) {
+      alert('Tidak ada data sertifikat untuk dihapus')
+      return
+    }
+    const konfirmasi = confirm(`Yakin ingin menghapus SEMUA ${sertifikat.length} data sertifikat? Tindakan ini tidak dapat dibatalkan!`)
+    if (!konfirmasi) return
+    const konfirmasi2 = confirm('Konfirmasi sekali lagi: SEMUA data sertifikat akan dihapus. Lanjutkan?')
+    if (!konfirmasi2) return
+    
+    try {
+      const STORAGE_KEY = 'e_sertifikat_bimtek_pokjawas_v1'
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) {
+        const data = JSON.parse(raw)
+        data.sertifikat = []
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+      }
+      fetchSertifikat()
+      alert('Semua data sertifikat berhasil dihapus')
+    } catch (error) {
+      console.error('Error deleting all sertifikat:', error)
+      alert('Gagal menghapus semua sertifikat: ' + error.message)
+    }
+  }
+
   const filteredSertifikat = sertifikat.filter(s => {
     const matchSearch = !searchTerm || 
       s.nomor_sertifikat.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -94,9 +120,18 @@ export default function VerifikasiAdmin() {
       <div className="flex-1 p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-kemenag-green mb-2">Verifikasi Sertifikat</h1>
-            <p className="text-gray-600">Kelola dan monitor sertifikat yang telah diterbitkan</p>
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-kemenag-green mb-2">Verifikasi Sertifikat</h1>
+              <p className="text-gray-600">Kelola dan monitor sertifikat yang telah diterbitkan</p>
+            </div>
+            <button
+              onClick={handleDeleteAll}
+              className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+            >
+              <Trash2 size={20} />
+              Hapus Semua
+            </button>
           </div>
 
           {/* Filters */}
