@@ -191,7 +191,7 @@ export default function GenerateSertifikat() {
           <p style="color: #666; font-size: 9pt; margin: 2px 0 0 0;">${formatTanggalIndonesia(kegiatan.tanggal_mulai)} s.d. ${formatTanggalIndonesia(kegiatan.tanggal_selesai)} &bull; ${kegiatan.tempat}</p>
         </div>
         <div style="position: relative; padding: 6mm 18mm 0 18mm; z-index: 1;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 9.5pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
             <thead>
               <tr style="background: ${bgColor}; color: #ffffff;">
                 <th style="padding: 6px 10px; text-align: center; width: 6%;">No</th>
@@ -210,10 +210,14 @@ export default function GenerateSertifikat() {
           </table>
         </div>
         <div style="position: absolute; bottom: 18mm; right: 25mm; text-align: center; z-index: 1;">
-          <p style="font-size: 9pt; color: #555; margin: 0 0 2px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
-          <div style="height: 35px;"></div>
-          <div style="border-top: 1.5px solid ${bgColor}; padding-top: 3px; min-width: 60mm;">
-            <p style="font-size: 10pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+          <p style="font-size: 12pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
+          <p style="font-size: 12pt; color: #555; margin: 0 0 4px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
+          <div style="margin: 4px auto; width: 90px; height: 90px;">
+            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block;" />
+          </div>
+          <div style="min-width: 60mm; margin: 2px auto 0 auto;">
+            <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
           </div>
         </div>
       </div>
@@ -233,7 +237,7 @@ export default function GenerateSertifikat() {
             <p style="color: #666; font-size: 8.5pt; margin: 2px 0 0 0;">${formatTanggalIndonesia(kegiatan.tanggal_mulai)} s.d. ${formatTanggalIndonesia(kegiatan.tanggal_selesai)} &bull; ${kegiatan.tempat}</p>
             <div style="width: 80mm; height: 1px; background: ${accentColor}; margin: 6px auto 0;"></div>
           </div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 9pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
             <thead>
               <tr style="background: ${bgColor}; color: #ffffff;">
                 <th style="padding: 5px 8px; text-align: center; width: 6%;">No</th>
@@ -252,10 +256,14 @@ export default function GenerateSertifikat() {
           </table>
         </div>
         <div style="position: absolute; bottom: 12mm; right: 20mm; text-align: center;">
-          <p style="font-size: 8.5pt; color: #555; margin: 0 0 2px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
-          <div style="height: 30px;"></div>
-          <div style="border-top: 1.5px solid ${bgColor}; padding-top: 3px; min-width: 55mm;">
-            <p style="font-size: 9.5pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+          <p style="font-size: 12pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
+          <p style="font-size: 12pt; color: #555; margin: 0 0 4px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
+          <div style="margin: 4px auto; width: 90px; height: 90px;">
+            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block;" />
+          </div>
+          <div style="min-width: 55mm; margin: 2px auto 0 auto;">
+            <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
+            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
           </div>
         </div>
       </div>
