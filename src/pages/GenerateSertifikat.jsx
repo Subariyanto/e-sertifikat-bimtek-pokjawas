@@ -288,7 +288,7 @@ export default function GenerateSertifikat() {
         template_id: selectedTemplate,
         nomor_sertifikat: nomorSertifikat,
         kode_unik: kodeUnik,
-        qr_url: qrDataUrl,
+        qr_url: '',
         status_validasi: 'valid',
         tanggal_terbit: new Date().toISOString().split('T')[0]
       }])
