@@ -12,6 +12,7 @@ export default function Pengaturan() {
     alamat_lembaga: '',
     nama_ketua: '',
     jabatan_ketua: '',
+    nip_ketua: '',
     nama_panitia: '',
     jabatan_panitia: '',
     format_nomor_sertifikat: '{nomor}/{kode_kegiatan}-POKJAWAS/JBR/{bulan_romawi}/{tahun}',
@@ -39,6 +40,7 @@ export default function Pengaturan() {
           alamat_lembaga: data.alamat_lembaga || '',
           nama_ketua: data.nama_ketua || '',
           jabatan_ketua: data.jabatan_ketua || '',
+          nip_ketua: data.nip_ketua || '',
           nama_panitia: data.nama_panitia || '',
           jabatan_panitia: data.jabatan_panitia || '',
           format_nomor_sertifikat: data.format_nomor_sertifikat || '{nomor}/{kode_kegiatan}-POKJAWAS/JBR/{bulan_romawi}/{tahun}',
@@ -154,6 +156,18 @@ export default function Pengaturan() {
                       type="text"
                       value={formData.jabatan_ketua}
                       onChange={(e) => setFormData({...formData, jabatan_ketua: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kemenag-green focus:border-transparent"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">NIP Ketua</label>
+                    <input
+                      type="text"
+                      value={formData.nip_ketua}
+                      onChange={(e) => setFormData({...formData, nip_ketua: e.target.value})}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kemenag-green focus:border-transparent"
                     />
                   </div>

@@ -208,7 +208,7 @@ export default function GenerateSertifikat() {
           </div>
           <div style="min-width: 60mm; margin: 2px auto 0 auto;">
             <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
-            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta && peserta.nip_nik ? peserta.nip_nik : '-'}</p>
+            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${pengaturan && pengaturan.nip_ketua ? pengaturan.nip_ketua : '-'}</p>
           </div>
         </div>
       </div>
@@ -254,7 +254,7 @@ export default function GenerateSertifikat() {
           </div>
           <div style="min-width: 55mm; margin: 2px auto 0 auto;">
             <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
-            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta && peserta.nip_nik ? peserta.nip_nik : '-'}</p>
+            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${pengaturan && pengaturan.nip_ketua ? pengaturan.nip_ketua : '-'}</p>
           </div>
         </div>
       </div>
@@ -556,7 +556,7 @@ export default function GenerateSertifikat() {
             </div>
             <div style="min-width: 60mm; margin: 2px auto 0 auto;">
               <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan?.nama_ketua || 'Subariyanto, S.Pd., M.Pd.I.'}</p>
-              <p style="font-size: 14pt; color: #777; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
+              <p style="font-size: 14pt; color: #777; margin: 1px 0 0 0;">NIP. ${pengaturan?.nip_ketua || ''}</p>
             </div>
           </div>
         </div>
@@ -648,7 +648,7 @@ export default function GenerateSertifikat() {
           </div>
           <div style="min-width: 55mm; margin: 2px auto 0 auto;">
             <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${template.font_nama_color || '#064E3B'};">${namaTtd}</p>
-            <p style="font-size: 14pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
+            <p style="font-size: 14pt; color: #555; margin: 1px 0 0 0;">NIP. ${pengaturan?.nip_ketua || ''}</p>
           </div>
         </div>
       </div>
