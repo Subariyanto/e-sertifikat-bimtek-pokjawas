@@ -56,9 +56,9 @@ export const parseTemplatePlaceholder = (text, data) => {
 export const getNarasiDefault = (jenisSertifikat) => {
   const narasi = {
     'Peserta': 'Diberikan kepada {{nama_peserta}} dari {{instansi}} sebagai peserta pada kegiatan {{nama_kegiatan}} yang diselenggarakan oleh {{nama_lembaga}} pada tanggal {{tanggal_mulai}} sampai dengan {{tanggal_selesai}} bertempat di {{tempat}} dengan beban {{jumlah_jp}} Jam Pelajaran.',
-    'Narasumber': 'Sebagai Narasumber pada kegiatan {{nama_kegiatan}} yang diselenggarakan oleh {{nama_lembaga}} pada tanggal {{tanggal_mulai}} bertempat di {{tempat}}.',
+    'Narasumber': 'Sebagai Narasumber pada kegiatan {{nama_kegiatan}} yang diselenggarakan oleh {{nama_lembaga}} pada tanggal {{tanggal_mulai}} s.d {{tanggal_selesai}} bertempat di {{tempat}}.',
     'Panitia': 'Diberikan kepada {{nama_peserta}} sebagai Panitia Pelaksana pada kegiatan {{nama_kegiatan}} yang diselenggarakan oleh {{nama_lembaga}} pada tanggal {{tanggal_mulai}} sampai dengan {{tanggal_selesai}}.',
-    'Moderator': 'Diberikan kepada {{nama_peserta}} sebagai Moderator pada kegiatan {{nama_kegiatan}} yang diselenggarakan oleh {{nama_lembaga}} pada tanggal {{tanggal_mulai}} bertempat di {{tempat}}.',
+    'Moderator': 'Diberikan kepada {{nama_peserta}} sebagai Moderator pada kegiatan {{nama_kegiatan}} yang diselenggarakan oleh {{nama_lembaga}} pada tanggal {{tanggal_mulai}} s.d {{tanggal_selesai}} bertempat di {{tempat}}.',
     'Penghargaan': 'Diberikan kepada {{nama_peserta}} atas kontribusi dan dedikasi dalam mensukseskan kegiatan {{nama_kegiatan}} yang diselenggarakan oleh {{nama_lembaga}}.'
   };
   
