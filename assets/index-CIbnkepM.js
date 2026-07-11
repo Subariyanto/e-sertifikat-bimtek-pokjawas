@@ -407,12 +407,12 @@ Kode: ${b}`:h;return await aa.toDataURL(j,{width:200,margin:1,color:{dark:"#0000
 
           <!-- TTD -->
           <div style="text-align: center;">
-            <p style="font-size: 9pt; color: #555; margin: 0 0 2px 0;">${(j==null?void 0:j.jabatan_ketua)||"Ketua Pokjawas Kab. Jember"}</p>
+            <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">${(j==null?void 0:j.jabatan_ketua)||"Ketua Pokjawas Kab. Jember"}</p>
             <!-- Signature space -->
             <div style="height: 35px;"></div>
             <div style="border-top: 1.5px solid ${J}; padding-top: 3px; min-width: 60mm;">
-              <p style="font-size: 10pt; margin: 0; font-weight: bold; color: ${J};">${(j==null?void 0:j.nama_ketua)||"Subariyanto, S.Pd., M.Pd.I."}</p>
-              <p style="font-size: 8pt; color: #777; margin: 1px 0 0 0;">NIP. ${h.nip_nik||"-"}</p>
+              <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${J};">${(j==null?void 0:j.nama_ketua)||"Subariyanto, S.Pd., M.Pd.I."}</p>
+              <p style="font-size: 14pt; color: #777; margin: 1px 0 0 0;">NIP. ${h.nip_nik||"-"}</p>
             </div>
           </div>
         </div>
@@ -438,24 +438,24 @@ Kode: ${b}`:h;return await aa.toDataURL(j,{width:200,margin:1,color:{dark:"#0000
         <img src="${p.background_image}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
 
         <!-- Lembaga + SERTIFIKAT + No (merged, no gap) -->
-        <div style="position: absolute; top: ${Math.max((p.pos_nomor_y||43)-16,3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
+        <div style="position: absolute; top: ${Math.max((p.pos_nomor_y||46)-16,3)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 100%;">
           <p style="font-size: ${(p.font_nomor_size||9)+2}pt; color: ${p.font_nomor_color||"#064E3B"}; letter-spacing: 2px; margin: 0 0 6px 0; text-transform: uppercase; font-weight: bold;">Kelompok Kerja Pengawas Madrasah Kab. Jember</p>
           <h1 style="font-size: ${(p.font_nomor_size||9)+18}pt; color: ${p.font_nomor_color||"#064E3B"}; margin: 0 0 2px 0; font-weight: bold; letter-spacing: 4px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">SERTIFIKAT</h1>
           <span style="font-size: ${p.font_nomor_size||9}pt; color: ${p.font_nomor_color||"#064E3B"}; letter-spacing: 1px; display: block;">No: ${M}</span>
         </div>
 
         <!-- Diberikan Kepada -->
-        <div style="position: absolute; top: ${Math.min((p.pos_nama_y||62)-5,(p.pos_nama_y||62)-5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
+        <div style="position: absolute; top: ${Math.min((p.pos_nama_y||65)-5,(p.pos_nama_y||65)-5)}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 80%;">
           <p style="font-size: ${p.font_narasi_size||11}pt; color: #555; margin: 0; font-style: italic;">Diberikan Kepada:</p>
         </div>
 
         <!-- Nama Peserta -->
-        <div style="position: absolute; top: ${p.pos_nama_y||62}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
+        <div style="position: absolute; top: ${p.pos_nama_y||65}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 85%;">
           <h2 style="font-size: ${p.font_nama_size||28}pt; color: ${p.font_nama_color||"#064E3B"}; margin: 0; font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); line-height: 1.3; word-wrap: break-word; white-space: normal;">${h.nama_lengkap}</h2>
         </div>
 
         <!-- Narasi -->
-        <div style="position: absolute; top: ${p.pos_narasi_y||65}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
+        <div style="position: absolute; top: ${p.pos_narasi_y||67}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; line-height: 1.8;">
           <p style="font-size: ${p.font_narasi_size||11}pt; color: ${p.font_narasi_color||"#333333"}; text-align: justify; text-justify: inter-word; margin: 0;">
             ${A}
           </p>
@@ -469,13 +469,13 @@ Kode: ${b}`:h;return await aa.toDataURL(j,{width:200,margin:1,color:{dark:"#0000
           <p style="font-size: 7pt; color: #555; margin: 2px 0 0 0;">Scan untuk verifikasi</p>
         </div>
 
-        <!-- Tanda Tangan -->
-        <div style="position: absolute; top: ${p.pos_ttd_y||82}%; left: ${p.pos_ttd_x||70}%; z-index: 2; text-align: center;">
-          <p style="font-size: 9pt; color: #555; margin: 0 0 2px 0;">${be}</p>
+        <!-- Tanda Tangan (center, font 14) -->
+        <div style="position: absolute; top: ${p.pos_ttd_y||82}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
+          <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">${be}</p>
           <div style="height: 30px;"></div>
-          <div style="border-top: 1px solid #333; padding-top: 2px; min-width: 55mm;">
-            <p style="font-size: 10pt; margin: 0; font-weight: bold; color: ${p.font_nama_color||"#064E3B"};">${ie}</p>
-            <p style="font-size: 8pt; color: #555; margin: 1px 0 0 0;">NIP. ${h.nip_nik||"-"}</p>
+          <div style="border-top: 1px solid #333; padding-top: 2px; min-width: 55mm; margin: 0 auto;">
+            <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${p.font_nama_color||"#064E3B"};">${ie}</p>
+            <p style="font-size: 14pt; color: #555; margin: 1px 0 0 0;">NIP. ${h.nip_nik||"-"}</p>
           </div>
         </div>
       </div>
