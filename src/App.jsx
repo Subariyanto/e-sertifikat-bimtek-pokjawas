@@ -25,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/verifikasi" element={<VerifikasiPublik />} />
           <Route path="/verifikasi/:kode" element={<VerifikasiPublik />} />
+          <Route path="/v/:encoded" element={<VerifikasiPublik />} />
 
           {/* Protected Routes */}
           <Route path="/dashboard" element={

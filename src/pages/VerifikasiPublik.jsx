@@ -4,27 +4,43 @@ import { CheckCircle, XCircle, Award, Calendar, MapPin, User, Building, ArrowLef
 import { formatTanggalIndonesia } from '../lib/utils'
 
 export default function VerifikasiPublik() {
-  const pathSegments = window.location.hash.split('/')
-  const encoded = pathSegments[pathSegments.length - 1]
-
   const [sertifikat, setSertifikat] = useState(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
 
   useEffect(() => {
-    if (encoded) {
-      try {
-        const decoded = JSON.parse(decodeURIComponent(escape(atob(encoded.replace(/-/g, '+').replace(/_/g, '/')))))
-        setSertifikat(decoded)
-      } catch (e) {
-        console.error('Decode error:', e)
-        setNotFound(true)
-      }
-    } else {
+    try {
+      const hash = window.location.hash
+      // Support both /verifikasi/:kode and /v/:encoded
+      const segs = hash.split('/')
+      const encoded = segs[segs.length - 1]
+      if (!encoded) { setNotFound(true); setLoading(false); return }
+
+      const decoded = decodeURIComponent(escape(atob(encoded.replace(/-/g, '+').replace(/_/g, '/'))))
+      const parts = decoded.split('|')
+      if (parts.length < 5) { setNotFound(true); setLoading(false); return }
+
+      setSertifikat({
+        kode: parts[0],
+        nama: parts[1],
+        nip: parts[2],
+        jenis: parts[3],
+        nomor: parts[4],
+        kegiatan_nama: parts[5] || '-',
+        kegiatan_tanggal_mulai: parts[6] || '',
+        kegiatan_tanggal_selesai: parts[7] || '',
+        kegiatan_tempat: parts[8] || '-',
+        kegiatan_jp: parts[9] || 0,
+        kegiatan_penyelenggara: parts[10] || '-',
+        tanggal_terbit: parts[11] || '',
+        instansi: parts[12] || '-',
+        jabatan: parts[13] || '-'
+      })
+    } catch (e) {
       setNotFound(true)
     }
     setLoading(false)
-  }, [encoded])
+  }, [])
 
   if (loading) {
     return (
@@ -60,7 +76,6 @@ export default function VerifikasiPublik() {
         </Link>
 
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-          {/* Header Status */}
           <div className="p-8 text-center bg-green-50">
             <CheckCircle size={80} className="text-green-600 mx-auto mb-4" />
             <h1 className="text-3xl font-bold text-green-800 mb-2">Sertifikat Valid</h1>
@@ -68,13 +83,11 @@ export default function VerifikasiPublik() {
           </div>
 
           <div className="p-8 space-y-6">
-            {/* Nomor Sertifikat */}
             <div className="text-center pb-6 border-b border-gray-200">
               <p className="text-sm text-gray-600 mb-1">Nomor Sertifikat</p>
               <p className="font-bold text-kemenag-green">{sertifikat.nomor || sertifikat.kode}</p>
             </div>
 
-            {/* Info Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex gap-3">
                 <div className="flex-shrink-0">
@@ -124,12 +137,11 @@ export default function VerifikasiPublik() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Tanggal Terbit</p>
-                  <p className="font-bold text-gray-800">{formatTanggalIndonesia(sertifikat.tanggal_terbit)}</p>
+                  <p className="font-bold text-gray-800">{sertifikat.tanggal_terbit ? formatTanggalIndonesia(sertifikat.tanggal_terbit) : '-'}</p>
                 </div>
               </div>
             </div>
 
-            {/* Detail Kegiatan */}
             <div className="bg-gray-50 rounded-xl p-6 space-y-3">
               <h3 className="font-bold text-gray-800 mb-4">Detail Kegiatan</h3>
               <div className="flex justify-between py-2 border-b border-gray-200">
@@ -143,8 +155,8 @@ export default function VerifikasiPublik() {
               <div className="flex justify-between py-2 border-b border-gray-200">
                 <span className="text-gray-600">Tanggal Pelaksanaan</span>
                 <span className="font-semibold text-gray-800">
-                  {formatTanggalIndonesia(sertifikat.kegiatan_tanggal_mulai)}
-                  {sertifikat.kegiatan_tanggal_mulai !== sertifikat.kegiatan_tanggal_selesai &&
+                  {sertifikat.kegiatan_tanggal_mulai ? formatTanggalIndonesia(sertifikat.kegiatan_tanggal_mulai) : '-'}
+                  {sertifikat.kegiatan_tanggal_selesai && sertifikat.kegiatan_tanggal_mulai !== sertifikat.kegiatan_tanggal_selesai &&
                     ` - ${formatTanggalIndonesia(sertifikat.kegiatan_tanggal_selesai)}`}
                 </span>
               </div>

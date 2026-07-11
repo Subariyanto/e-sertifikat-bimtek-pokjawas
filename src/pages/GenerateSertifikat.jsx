@@ -71,17 +71,30 @@ export default function GenerateSertifikat() {
 
   const generateQRCode = async (kodeUnik, pesertaData, sertifikatInfo) => {
     try {
-      // Embed sertifikat data in URL as base64 for offline verification
-      const verifyData = sertifikatInfo || {
-        kode: kodeUnik,
-        nama: pesertaData?.nama_lengkap || '',
-        nip: pesertaData?.nip_nik || '',
-      }
-      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(verifyData)))).replace(/\+/g, '-').replace(/\//g, '_')
-      const verifyUrl = `${window.location.origin}${window.location.pathname}#/verifikasi/${encoded}`
+      // Minimal data for QR (short keys to keep URL small)
+      const d = sertifikatInfo || {}
+      const v = [
+        d.kode || kodeUnik,
+        d.nama || pesertaData?.nama_lengkap || '',
+        d.nip || pesertaData?.nip_nik || '-',
+        d.jenis || 'Peserta',
+        d.nomor || '',
+        d.kegiatan_nama || '',
+        d.kegiatan_tanggal_mulai || '',
+        d.kegiatan_tanggal_selesai || '',
+        d.kegiatan_tempat || '-',
+        d.kegiatan_jp || 0,
+        d.kegiatan_penyelenggara || '-',
+        d.tanggal_terbit || '',
+        d.instansi || '-',
+        d.jabatan || '-'
+      ]
+      const encoded = btoa(unescape(encodeURIComponent(v.join('|')))).replace(/\+/g, '-').replace(/\//g, '_')
+      const verifyUrl = `${window.location.origin}${window.location.pathname}#/v/${encoded}`
       const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
-        width: 200,
+        width: 300,
         margin: 1,
+        errorCorrectionLevel: 'L',
         color: {
           dark: '#000000',
           light: '#FFFFFF'
@@ -560,8 +573,8 @@ export default function GenerateSertifikat() {
           <div style="text-align: center;">
             <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
             <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'}</p>
-            <div style="margin: 4px auto; width: 80px; height: 80px;">
-              <img src="${qrDataUrl}" style="width: 80px; height: 80px; display: block;" />
+            <div style="margin: 4px auto; width: 90px; height: 90px;">
+              <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block;" />
             </div>
             <div style="min-width: 60mm; margin: 2px auto 0 auto;">
               <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan?.nama_ketua || 'Subariyanto, S.Pd., M.Pd.I.'}</p>
@@ -652,8 +665,8 @@ export default function GenerateSertifikat() {
         <div style="position: absolute; top: 66%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
           <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
           <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${jabatanTtd}</p>
-          <div style="margin: 4px auto; width: 80px; height: 80px;">
-            <img src="${qrDataUrl}" style="width: 80px; height: 80px; display: block;" />
+          <div style="margin: 4px auto; width: 90px; height: 90px;">
+            <img src="${qrDataUrl}" style="width: 90px; height: 90px; display: block;" />
           </div>
           <div style="min-width: 55mm; margin: 2px auto 0 auto;">
             <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${template.font_nama_color || '#064E3B'};">${namaTtd}</p>
