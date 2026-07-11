@@ -182,7 +182,7 @@ export default function GenerateSertifikat() {
           <p style="color: #666; font-size: 9pt; margin: 2px 0 0 0;">${formatTanggalIndonesia(kegiatan.tanggal_mulai)} s.d. ${formatTanggalIndonesia(kegiatan.tanggal_selesai)} &bull; ${kegiatan.tempat}</p>
         </div>
         <div style="position: relative; padding: 6mm 18mm 0 18mm; z-index: 1;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 13pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
             <thead>
               <tr style="background: ${bgColor}; color: #ffffff;">
                 <th style="padding: 6px 10px; text-align: center; width: 6%;">No</th>
@@ -228,7 +228,7 @@ export default function GenerateSertifikat() {
             <p style="color: #666; font-size: 8.5pt; margin: 2px 0 0 0;">${formatTanggalIndonesia(kegiatan.tanggal_mulai)} s.d. ${formatTanggalIndonesia(kegiatan.tanggal_selesai)} &bull; ${kegiatan.tempat}</p>
             <div style="width: 80mm; height: 1px; background: ${accentColor}; margin: 6px auto 0;"></div>
           </div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 13pt;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12pt;">
             <thead>
               <tr style="background: ${bgColor}; color: #ffffff;">
                 <th style="padding: 5px 8px; text-align: center; width: 6%;">No</th>
