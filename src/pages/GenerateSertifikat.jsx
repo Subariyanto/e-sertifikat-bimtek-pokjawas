@@ -79,7 +79,9 @@ export default function GenerateSertifikat() {
         d.jenis || 'Peserta',
         d.nomor || ''
       ]
-      const encoded = btoa(unescape(encodeURIComponent(v.join('|')))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
+      // URL-safe base64 (modern, no deprecated unescape/escape)
+      const jsonStr = v.join('|')
+      const encoded = btoa(String.fromCharCode(...new TextEncoder().encode(jsonStr))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
       const verifyUrl = `${window.location.origin}${window.location.pathname}#/v/${encoded}`
       const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
         width: 300,
@@ -142,19 +144,8 @@ export default function GenerateSertifikat() {
     const qrDataUrl = await generateQRCode(kodeUnik, pesertaData, {
       kode: kodeUnik,
       nama: pesertaData.nama_lengkap,
-      nip: pesertaData.nip_nik || '-',
       jenis: pesertaData.jenis_sertifikat || 'Peserta',
-      instansi: pesertaData.instansi || '-',
-      jabatan: pesertaData.jabatan || '-',
-      nomor: nomorSertifikat,
-      kegiatan_nama: kegiatanData.nama_kegiatan,
-      kegiatan_jenis: kegiatanData.jenis_kegiatan,
-      kegiatan_tanggal_mulai: kegiatanData.tanggal_mulai,
-      kegiatan_tanggal_selesai: kegiatanData.tanggal_selesai,
-      kegiatan_tempat: kegiatanData.tempat || '-',
-      kegiatan_jp: kegiatanData.jumlah_jp || 0,
-      kegiatan_penyelenggara: kegiatanData.penyelenggara || '-',
-      tanggal_terbit: new Date().toISOString().split('T')[0]
+      nomor: nomorSertifikat
     })
 
     setPreviewData({
@@ -284,19 +275,8 @@ export default function GenerateSertifikat() {
     const qrDataUrl = await generateQRCode(kodeUnik, pesertaData, {
       kode: kodeUnik,
       nama: pesertaData.nama_lengkap,
-      nip: pesertaData.nip_nik || '-',
       jenis: pesertaData.jenis_sertifikat || 'Peserta',
-      instansi: pesertaData.instansi || '-',
-      jabatan: pesertaData.jabatan || '-',
-      nomor: nomorSertifikat,
-      kegiatan_nama: kegiatanData.nama_kegiatan,
-      kegiatan_jenis: kegiatanData.jenis_kegiatan,
-      kegiatan_tanggal_mulai: kegiatanData.tanggal_mulai,
-      kegiatan_tanggal_selesai: kegiatanData.tanggal_selesai,
-      kegiatan_tempat: kegiatanData.tempat || '-',
-      kegiatan_jp: kegiatanData.jumlah_jp || 0,
-      kegiatan_penyelenggara: kegiatanData.penyelenggara || '-',
-      tanggal_terbit: new Date().toISOString().split('T')[0]
+      nomor: nomorSertifikat
     })
 
     // Simpan ke database

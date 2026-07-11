@@ -16,7 +16,7 @@ export default function VerifikasiPublik() {
 
       let b64 = raw.replace(/-/g, '+').replace(/_/g, '/')
       while (b64.length % 4) b64 += '='
-      const decoded = decodeURIComponent(escape(atob(b64)))
+      const decoded = new TextDecoder().decode(Uint8Array.from(atob(b64), c => c.charCodeAt(0)))
       const parts = decoded.split('|')
 
       if (parts.length >= 2) {
