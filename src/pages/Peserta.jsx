@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase'
 import Sidebar from '../components/Sidebar'
 import { Plus, Edit, Trash2, Users, Upload, Download, Search, FileDown } from 'lucide-react'
 import Papa from 'papaparse'
-import { exportToCSV, downloadCSVTemplate } from '../lib/utils'
+import { exportToExcel, downloadExcelTemplate, parseExcelFile, exportToCSV, downloadCSVTemplate } from '../lib/utils'
 
 export default function Peserta() {
   const [peserta, setPeserta] = useState([])
@@ -128,55 +128,62 @@ export default function Peserta() {
     }
   }
 
-  const handleImportCSV = (e) => {
+  const handleImportFile = async (e) => {
     const file = e.target.files[0]
     if (!file) return
 
-    Papa.parse(file, {
-      header: true,
-      delimiter: '', // auto-detect
-      skipEmptyLines: true,
-      complete: async (results) => {
-        try {
-          const validData = results.data
-            .filter(row => row.nama_lengkap && row.nama_lengkap.trim())
-            .map(row => ({
-              kegiatan_id: formData.kegiatan_id,
-              nama_lengkap: row.nama_lengkap?.trim() || '',
-              nip_nik: row.nip_nik?.trim() || '',
-              jabatan: row.jabatan?.trim() || '',
-              instansi: row.instansi?.trim() || '',
-              email: row.email?.trim() || '',
-              no_hp: row.no_hp?.trim() || '',
-              jenis_sertifikat: row.jenis_sertifikat?.trim() || 'Peserta',
-              status_kehadiran: 'hadir'
-            }))
-
-          if (validData.length === 0) {
-            alert('Tidak ada data valid untuk diimport')
-            return
-          }
-
-          const { error } = await supabase
-            .from('peserta')
-            .insert(validData)
-
-          if (error) throw error
-          
-          alert(`Berhasil import ${validData.length} peserta`)
-          setShowImportModal(false)
-          resetForm()
-          fetchPeserta()
-        } catch (error) {
-          console.error('Error importing CSV:', error)
-          alert('Gagal import data')
-        }
-      },
-      error: (error) => {
-        console.error('CSV parse error:', error)
-        alert('Gagal membaca file CSV')
+    try {
+      let rows = []
+      
+      if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+        // Excel import
+        rows = await parseExcelFile(file)
+      } else {
+        // CSV fallback
+        const result = await new Promise((resolve, reject) => {
+          Papa.parse(file, {
+            header: true,
+            skipEmptyLines: true,
+            complete: resolve,
+            error: reject
+          })
+        })
+        rows = result.data
       }
-    })
+
+      const validData = rows
+        .filter(row => row.nama_lengkap && row.nama_lengkap.trim())
+        .map(row => ({
+          kegiatan_id: formData.kegiatan_id,
+          nama_lengkap: row.nama_lengkap?.trim() || '',
+          nip_nik: row.nip_nik?.trim() || '',
+          jabatan: row.jabatan?.trim() || '',
+          instansi: row.instansi?.trim() || '',
+          email: row.email?.trim() || '',
+          no_hp: row.no_hp?.trim() || '',
+          jenis_sertifikat: row.jenis_sertifikat?.trim() || 'Peserta',
+          status_kehadiran: 'hadir'
+        }))
+
+      if (validData.length === 0) {
+        alert('Tidak ada data valid untuk diimport')
+        return
+      }
+
+      const { error } = await supabase
+        .from('peserta')
+        .insert(validData)
+
+      if (error) throw error
+      
+      alert(`Berhasil import ${validData.length} peserta`)
+      setShowImportModal(false)
+      resetForm()
+      fetchPeserta()
+    } catch (error) {
+      console.error('Error importing:', error)
+      alert('Gagal import data: ' + error.message)
+    }
   }
 
   const handleExport = () => {
@@ -192,7 +199,7 @@ export default function Peserta() {
       status_kehadiran: p.status_kehadiran
     }))
     
-    exportToCSV(exportData, `peserta_${new Date().toISOString().slice(0,10)}.csv`)
+    exportToExcel(exportData, `peserta_${new Date().toISOString().slice(0,10)}.xlsx`)
   }
 
   const resetForm = () => {
@@ -232,18 +239,18 @@ export default function Peserta() {
             </div>
             <div className="flex gap-2">
               <button
-                onClick={() => downloadCSVTemplate('template_import_peserta.csv')}
+                onClick={() => downloadExcelTemplate('template_import_peserta.xlsx')}
                 className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
               >
                 <FileDown size={20} />
-                Template CSV
+                Template Excel
               </button>
               <button
                 onClick={() => setShowImportModal(true)}
                 className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Upload size={20} />
-                Import CSV
+                Import Excel
               </button>
               <button
                 onClick={handleExport}
@@ -509,7 +516,7 @@ export default function Peserta() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-2xl font-bold text-kemenag-green">Import Peserta CSV</h2>
+              <h2 className="text-2xl font-bold text-kemenag-green">Import Peserta Excel</h2>
             </div>
             
             <div className="p-6 space-y-4">
@@ -529,25 +536,25 @@ export default function Peserta() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">File CSV</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">File Excel/CSV</label>
                 <input
                   type="file"
-                  accept=".csv"
-                  onChange={handleImportCSV}
+                  accept=".xlsx,.xls,.csv"
+                  onChange={handleImportFile}
                   disabled={!formData.kegiatan_id}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kemenag-green focus:border-transparent"
                 />
               </div>
 
               <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
-                <p className="font-semibold mb-2">Format CSV (pakai titik koma ;):</p>
+                <p className="font-semibold mb-2">Format Excel (.xlsx) atau CSV:</p>
                 <p className="font-mono text-xs">nama_lengkap; nip_nik; jabatan; instansi; email; no_hp; jenis_sertifikat</p>
                 <p className="mt-2 text-xs">Jenis Sertifikat: Peserta, Narasumber, Panitia, Moderator, Penghargaan</p>
                 <button
-                  onClick={() => downloadCSVTemplate('template_import_peserta.csv')}
+                  onClick={() => downloadExcelTemplate('template_import_peserta.xlsx')}
                   className="mt-2 text-blue-600 hover:underline text-xs font-semibold"
                 >
-                  ⬇ Download Template CSV
+                  ⬇ Download Template Excel
                 </button>
               </div>
 

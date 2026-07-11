@@ -103,6 +103,53 @@ export const getStatusColor = (status) => {
 };
 
 // Export to CSV (semicolon delimiter for Indonesian Excel compatibility)
+// Export data to Excel (.xlsx)
+export const exportToExcel = (data, filename) => {
+  if (!data || data.length === 0) return;
+  import('xlsx').then(XLSX => {
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Data');
+    XLSX.writeFile(wb, filename);
+  });
+};
+
+// Download Excel template for import
+export const downloadExcelTemplate = (filename) => {
+  const headers = ['nama_lengkap', 'nip_nik', 'jabatan', 'instansi', 'email', 'no_hp', 'jenis_sertifikat'];
+  const sampleRow = ['Ahmad Zainuri', '197001011998031001', 'Kepala MI', 'MI Nurul Huda', 'ahmad@email.com', '081234567890', 'Peserta'];
+  const data = [headers, sampleRow];
+  import('xlsx').then(XLSX => {
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Template');
+    XLSX.writeFile(wb, filename);
+  });
+};
+
+// Parse Excel file
+export const parseExcelFile = (file) => {
+  return new Promise((resolve, reject) => {
+    import('xlsx').then(XLSX => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const wb = XLSX.read(data, { type: 'array' });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          const json = XLSX.utils.sheet_to_json(ws, { defval: '' });
+          resolve(json);
+        } catch (err) {
+          reject(err);
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(file);
+    }).catch(reject);
+  });
+};
+
+// Legacy CSV functions (kept for backward compat)
 export const exportToCSV = (data, filename) => {
   if (!data || data.length === 0) return;
   
@@ -124,7 +171,6 @@ export const exportToCSV = (data, filename) => {
   document.body.removeChild(link);
 };
 
-// Download CSV template for import
 export const downloadCSVTemplate = (filename) => {
   const headers = ['nama_lengkap', 'nip_nik', 'jabatan', 'instansi', 'email', 'no_hp', 'jenis_sertifikat'];
   const sampleRow = ['Ahmad Zainuri', '197001011998031001', 'Kepala MI', 'MI Nurul Huda', 'ahmad@email.com', '081234567890', 'Peserta'];
