@@ -148,6 +148,9 @@ export default function GenerateSertifikat() {
       nomor: nomorSertifikat
     })
 
+    // Fallback: if QR failed, use transparent 1x1 pixel to prevent html2canvas crash
+    const safeQrDataUrl = qrDataUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+
     setPreviewData({
       kegiatan: kegiatanData,
       template: templateData,
@@ -155,7 +158,7 @@ export default function GenerateSertifikat() {
       pengaturan,
       nomorSertifikat,
       kodeUnik,
-      qrDataUrl
+      qrDataUrl: safeQrDataUrl
     })
   }
 
@@ -279,6 +282,9 @@ export default function GenerateSertifikat() {
       nomor: nomorSertifikat
     })
 
+    // Fallback: if QR failed, use transparent 1x1 pixel to prevent html2canvas crash
+    const safeQrDataUrl = qrDataUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+
     // Simpan ke database
     const { data: sertifikatData, error: insertError } = await supabase
       .from('sertifikat')
@@ -310,7 +316,7 @@ export default function GenerateSertifikat() {
       peserta: pesertaData,
       pengaturan,
       nomorSertifikat,
-      qrDataUrl
+      qrDataUrl: safeQrDataUrl
     })
 
     // Page 1
@@ -343,8 +349,8 @@ export default function GenerateSertifikat() {
     pdf.addPage()
 
     const materiHTML = templateData && templateData.background_image
-      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl, peserta: pesertaData })
-      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl, peserta: pesertaData })
+      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl: safeQrDataUrl, peserta: pesertaData })
+      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl: safeQrDataUrl, peserta: pesertaData })
 
     const tempDiv2 = document.createElement('div')
     tempDiv2.innerHTML = materiHTML
