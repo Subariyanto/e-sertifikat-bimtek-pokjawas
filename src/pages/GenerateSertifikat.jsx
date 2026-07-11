@@ -72,11 +72,8 @@ export default function GenerateSertifikat() {
   const generateQRCode = async (kodeUnik, pesertaData) => {
     try {
       const verifyUrl = `${window.location.origin}${window.location.pathname}#/verifikasi/${kodeUnik}`
-      // QR contains verification URL + participant info (Name + NIP/NIK)
-      const qrContent = pesertaData
-        ? `${verifyUrl}\nNama: ${pesertaData.nama_lengkap}\nNIP/NIK: ${pesertaData.nip_nik || '-'}\nKode: ${kodeUnik}`
-        : verifyUrl
-      const qrDataUrl = await QRCode.toDataURL(qrContent, {
+      // QR contains pure verification URL (no login required)
+      const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
         width: 200,
         margin: 1,
         color: {
@@ -611,14 +608,6 @@ export default function GenerateSertifikat() {
           <p style="font-size: ${template.font_narasi_size || 11}pt; color: ${template.font_narasi_color || '#333333'}; text-align: justify; text-justify: inter-word; margin: 0;">
             ${narasiFinal}
           </p>
-        </div>
-
-        <!-- QR Code -->
-        <div style="position: absolute; top: 72%; left: 5%; z-index: 2; text-align: center;">
-          <div style="border: 1px solid rgba(0,0,0,0.2); padding: 3px; background: rgba(255,255,255,0.8); border-radius: 4px; display: inline-block;">
-            <img src="${qrDataUrl}" style="width: ${qrSize}px; height: ${qrSize}px; display: block;" />
-          </div>
-          <p style="font-size: 7pt; color: #555; margin: 2px 0 0 0;">Scan untuk verifikasi</p>
         </div>
 
         <!-- Tanda Tangan (center, font 14, QR as signature) -->
