@@ -523,10 +523,11 @@ export default function GenerateSertifikat() {
 
           <!-- TTD -->
           <div style="text-align: center;">
-            <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">${pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'}</p>
+            <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">${kegiatan.tempat || 'Jember'}, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
+            <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${pengaturan?.jabatan_ketua || 'Ketua Pokjawas Kab. Jember'}</p>
             <!-- Signature space -->
             <div style="height: 35px;"></div>
-            <div style="border-top: 1.5px solid ${bgColor}; padding-top: 3px; min-width: 60mm;">
+            <div style="min-width: 60mm;">
               <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan?.nama_ketua || 'Subariyanto, S.Pd., M.Pd.I.'}</p>
               <p style="font-size: 14pt; color: #777; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
             </div>
@@ -619,11 +620,12 @@ export default function GenerateSertifikat() {
           <p style="font-size: 7pt; color: #555; margin: 2px 0 0 0;">Scan untuk verifikasi</p>
         </div>
 
-        <!-- Tanda Tangan (center, font 14) -->
-        <div style="position: absolute; top: ${template.pos_ttd_y || 82}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
-          <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">${jabatanTtd}</p>
+        <!-- Tanda Tangan (center, font 14, no line) -->
+        <div style="position: absolute; top: ${template.pos_ttd_y || 78}%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center;">
+          <p style="font-size: 14pt; color: #555; margin: 0 0 2px 0;">${kegiatan.tempat || 'Jember'}, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
+          <p style="font-size: 14pt; color: #555; margin: 0 0 4px 0;">${jabatanTtd}</p>
           <div style="height: 30px;"></div>
-          <div style="border-top: 1px solid #333; padding-top: 2px; min-width: 55mm; margin: 0 auto;">
+          <div style="min-width: 55mm; margin: 0 auto;">
             <p style="font-size: 14pt; margin: 0; font-weight: bold; color: ${template.font_nama_color || '#064E3B'};">${namaTtd}</p>
             <p style="font-size: 14pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
           </div>
