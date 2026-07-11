@@ -128,6 +128,31 @@ export default function Peserta() {
     }
   }
 
+  const handleDeleteAll = async () => {
+    if (peserta.length === 0) {
+      alert('Tidak ada data peserta untuk dihapus')
+      return
+    }
+    const konfirmasi = confirm(`Yakin ingin menghapus SEMUA ${peserta.length} data peserta? Tindakan ini tidak dapat dibatalkan!`)
+    if (!konfirmasi) return
+    const konfirmasi2 = confirm('Konfirmasi sekali lagi: SEMUA data peserta akan dihapus. Lanjutkan?')
+    if (!konfirmasi2) return
+    
+    try {
+      const { error } = await supabase
+        .from('peserta')
+        .delete()
+        .neq('id', '00000000-0000-0000-0000-000000000000')
+      
+      if (error) throw error
+      fetchPeserta()
+      alert('Semua data peserta berhasil dihapus')
+    } catch (error) {
+      console.error('Error deleting all peserta:', error)
+      alert('Gagal menghapus semua peserta')
+    }
+  }
+
   const handleImportFile = async (e) => {
     const file = e.target.files[0]
     if (!file) return
@@ -268,6 +293,13 @@ export default function Peserta() {
               >
                 <Plus size={20} />
                 Tambah Peserta
+              </button>
+              <button
+                onClick={handleDeleteAll}
+                className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+              >
+                <Trash2 size={20} />
+                Hapus Semua
               </button>
             </div>
           </div>
