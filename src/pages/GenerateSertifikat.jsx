@@ -159,7 +159,7 @@ export default function GenerateSertifikat() {
     })
   }
 
-  const renderMateriHTML = ({ kegiatan, materiList, pengaturan, qrDataUrl }) => {
+  const renderMateriHTML = ({ kegiatan, materiList, pengaturan, qrDataUrl, peserta }) => {
     const bgColor = '#064E3B'
     const accentColor = '#D4AF37'
     const totalJP = materiList.reduce((sum, m) => sum + (parseInt(m.jumlah_jp) || 0), 0)
@@ -200,7 +200,7 @@ export default function GenerateSertifikat() {
             </tbody>
           </table>
         </div>
-        <div style="position: absolute; bottom: 18mm; right: 25mm; text-align: center; z-index: 1;">
+        <div style="position: absolute; bottom: 18mm; left: 50%; transform: translateX(-50%); text-align: center; z-index: 1;">
           <p style="font-size: 12pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
           <p style="font-size: 12pt; color: #555; margin: 0 0 4px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
           <div style="margin: 4px auto; width: 90px; height: 90px;">
@@ -208,14 +208,14 @@ export default function GenerateSertifikat() {
           </div>
           <div style="min-width: 60mm; margin: 2px auto 0 auto;">
             <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
-            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
+            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta && peserta.nip_nik ? peserta.nip_nik : '-'}</p>
           </div>
         </div>
       </div>
     `
   }
 
-  const renderMateriHTMLSimple = ({ kegiatan, materiList, pengaturan, qrDataUrl }) => {
+  const renderMateriHTMLSimple = ({ kegiatan, materiList, pengaturan, qrDataUrl, peserta }) => {
     const bgColor = '#064E3B'
     const accentColor = '#D4AF37'
     const totalJP = materiList.reduce((sum, m) => sum + (parseInt(m.jumlah_jp) || 0), 0)
@@ -246,7 +246,7 @@ export default function GenerateSertifikat() {
             </tbody>
           </table>
         </div>
-        <div style="position: absolute; bottom: 12mm; right: 20mm; text-align: center;">
+        <div style="position: absolute; bottom: 12mm; left: 50%; transform: translateX(-50%); text-align: center;">
           <p style="font-size: 12pt; color: #555; margin: 0 0 2px 0;">Jember, ${formatTanggalIndonesia(kegiatan.tanggal_selesai)}</p>
           <p style="font-size: 12pt; color: #555; margin: 0 0 4px 0;">${pengaturan && pengaturan.jabatan_ketua ? pengaturan.jabatan_ketua : 'Ketua Pokjawas Kab. Jember'}</p>
           <div style="margin: 4px auto; width: 90px; height: 90px;">
@@ -254,7 +254,7 @@ export default function GenerateSertifikat() {
           </div>
           <div style="min-width: 55mm; margin: 2px auto 0 auto;">
             <p style="font-size: 12pt; margin: 0; font-weight: bold; color: ${bgColor};">${pengaturan && pengaturan.nama_ketua ? pengaturan.nama_ketua : 'Subariyanto, S.Pd., M.Pd.I.'}</p>
-            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta.nip_nik || '-'}</p>
+            <p style="font-size: 12pt; color: #555; margin: 1px 0 0 0;">NIP. ${peserta && peserta.nip_nik ? peserta.nip_nik : '-'}</p>
           </div>
         </div>
       </div>
@@ -343,8 +343,8 @@ export default function GenerateSertifikat() {
     pdf.addPage()
 
     const materiHTML = templateData && templateData.background_image
-      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl })
-      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl })
+      ? renderMateriHTMLSimple({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl, peserta: pesertaData })
+      : renderMateriHTML({ kegiatan: kegiatanData, materiList, pengaturan, qrDataUrl, peserta: pesertaData })
 
     const tempDiv2 = document.createElement('div')
     tempDiv2.innerHTML = materiHTML
